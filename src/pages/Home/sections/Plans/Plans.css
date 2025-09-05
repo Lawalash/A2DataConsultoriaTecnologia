@@ -1,0 +1,1531 @@
+@charset "UTF-8";
+
+/* ======================================== */
+/* 0. Configurações Globais e Variáveis     */
+/* ======================================== */
+
+:root {
+  /* Paleta de cores moderna */
+  --azul-escuro: #0F172A;
+  --azul-medio: #3B82F6;
+  --azul-claro: #60A5FA;
+  --azul-light: #DBEAFE;
+  --cinza: #64748B;
+  --cinza-escuro: #334155;
+  --cinza-light: #F8FAFC;
+  --branco: #FFFFFF;
+  --branco-soft: #FEFEFE;
+  --verde-sucesso: #10B981;
+  --vermelho-erro: #EF4444;
+  --vermelho-desconto: #F59E0B;
+  --roxo-premium: #8B5CF6;
+  --roxo-dark: #6D28D9;
+  --gradiente-primary: linear-gradient(135deg, #3B82F6, #1D4ED8);
+  --gradiente-premium: linear-gradient(135deg, #8B5CF6, #6D28D9);
+  --gradiente-custom: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #334155 100%);
+  --gradiente-custom-animated: linear-gradient(45deg, #0F172A 0%, #1E293B 25%, #334155 50%, #1E293B 75%, #0F172A 100%);
+
+  /* Cores RGB para transparências */
+  --azul-medio-rgb: 59, 130, 246;
+  --azul-escuro-rgb: 15, 23, 42;
+  --roxo-premium-rgb: 139, 92, 246;
+
+  /* Transições e animações */
+  --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* Sombras modernas */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-colored: 0 20px 25px -5px rgba(var(--azul-medio-rgb), 0.1), 0 8px 10px -6px rgba(var(--azul-medio-rgb), 0.1);
+  --shadow-premium: 0 20px 25px -5px rgba(var(--roxo-premium-rgb), 0.15), 0 8px 10px -6px rgba(var(--roxo-premium-rgb), 0.1);
+  --shadow-custom: 0 25px 50px -12px rgba(var(--azul-escuro-rgb), 0.4), 0 8px 20px -6px rgba(var(--roxo-premium-rgb), 0.2);
+
+  /* Tipografia */
+  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  
+  /* Bordas */
+  --border-radius: 12px;
+  --border-radius-lg: 16px;
+  --border-radius-xl: 20px;
+}
+
+/* Reset aprimorado */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-padding-top: 80px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--cinza-escuro);
+  background-color: var(--branco);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ======================================== */
+/* 1. Seção de Planos (Container Principal) */
+/* ======================================== */
+
+.plans-section {
+  padding: 120px 20px;
+  background: linear-gradient(135deg, var(--cinza-light) 0%, var(--branco) 50%, var(--azul-light) 100%);
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: var(--transition-smooth);
+}
+
+.plans-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%233B82F6' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+.plans-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.plans-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* ======================================== */
+/* 2. Hero Section dos Planos               */
+/* ======================================== */
+
+.plans-hero {
+  margin-bottom: 80px;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.plans-container h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 800;
+  color: var(--azul-escuro);
+  margin-bottom: 20px;
+  position: relative;
+  background: var(--gradiente-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+}
+
+.plans-subtitle {
+  font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+  color: var(--cinza);
+  margin-bottom: 40px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.plans-features-preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.preview-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--cinza-escuro);
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: var(--transition-smooth);
+}
+
+.preview-item:hover {
+  color: var(--azul-medio);
+  transform: translateY(-2px);
+}
+
+.preview-item svg {
+  color: var(--verde-sucesso);
+  background: rgba(16, 185, 129, 0.1);
+  border-radius: 50%;
+  padding: 2px;
+  transition: var(--transition-smooth);
+}
+
+.preview-item:hover svg {
+  transform: scale(1.1);
+  background: rgba(16, 185, 129, 0.2);
+}
+
+/* ======================================== */
+/* 3. Grid dos Cards de Planos              */
+/* ======================================== */
+
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 32px;
+  justify-content: center;
+  align-items: start;
+  margin-bottom: 80px;
+}
+
+/* ======================================== */
+/* 4. Estilo Individual do Card de Plano    */
+/* ======================================== */
+
+.plan-card {
+  background: var(--branco-soft);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-md);
+  transition: var(--transition-smooth);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid rgba(var(--azul-medio-rgb), 0.08);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  transform: translateY(30px);
+  animation: slideInUp 0.6s ease-out forwards;
+}
+
+.plan-card:hover {
+  transform: translateY(-16px) scale(1.02);
+  box-shadow: var(--shadow-2xl);
+  border-color: rgba(var(--azul-medio-rgb), 0.2);
+}
+
+@keyframes slideInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ======================================== */
+/* 4.1. Card Popular                        */
+/* ======================================== */
+
+.plan-card.popular {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-colored);
+  border: 2px solid var(--azul-medio);
+  z-index: 10;
+  background: linear-gradient(135deg, var(--branco) 0%, rgba(var(--azul-medio-rgb), 0.02) 100%);
+}
+
+.plan-card.popular:hover {
+  transform: scale(1.05) translateY(-16px);
+  box-shadow: var(--shadow-premium);
+}
+
+.plan-popular-tag {
+  position: absolute;
+  top: 20px;
+  right: -40px;
+  background: var(--gradiente-primary);
+  color: var(--branco);
+  padding: 8px 50px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  transform: rotate(45deg);
+  box-shadow: var(--shadow-lg);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ======================================== */
+/* 4.2. Header do Card                      */
+/* ======================================== */
+
+.plan-header {
+  padding: 40px 30px 30px;
+  text-align: center;
+  border-bottom: 1px solid rgba(var(--azul-medio-rgb), 0.08);
+  position: relative;
+}
+
+.plan-icon-wrapper {
+  width: 80px;
+  height: 80px;
+  background: rgba(var(--azul-medio-rgb), 0.1);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 20px;
+  transition: var(--transition-bounce);
+  color: var(--azul-medio);
+  position: relative;
+  overflow: hidden;
+}
+
+.icon-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(var(--azul-medio-rgb), 0.3) 0%, transparent 70%);
+  transform: scale(0);
+  transition: var(--transition-smooth);
+}
+
+.plan-card:hover .plan-icon-wrapper {
+  background: var(--azul-medio);
+  color: var(--branco);
+  transform: scale(1.1) rotate(12deg);
+  box-shadow: var(--shadow-lg);
+}
+
+.plan-card:hover .icon-glow {
+  transform: scale(1.5);
+}
+
+.plan-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--azul-escuro);
+}
+
+.plan-badge {
+  background: var(--gradiente-primary);
+  color: var(--branco);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 20px;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ======================================== */
+/* 4.3. Estatísticas do Plano               */
+/* ======================================== */
+
+.plan-stats {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 30px;
+  gap: 13px;
+  background: rgba(var(--azul-medio-rgb), 0.02);
+  margin: 0 30px;
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(var(--azul-medio-rgb), 0.08);
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+}
+
+.stat-icon {
+  color: var(--azul-medio);
+  margin-bottom: 4px;
+}
+
+.stat-number {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--azul-medio);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--cinza)!important; /* Força branco puro */
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-divider {
+  width: 1px;
+  height: 40px;
+  background: rgba(var(--azul-medio-rgb), 0.2);
+}
+
+/* ======================================== */
+/* 4.4. Preço do Card                       */
+/* ======================================== */
+
+.plan-price {
+  padding: 40px 30px;
+  text-align: center;
+}
+
+.price-container {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: var(--transition-smooth);
+}
+
+.price-container.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.price-discount-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 16px;
+  min-height: 32px;
+  gap: 12px;
+}
+
+.price-original {
+  font-size: 1.1rem;
+  color: var(--cinza);
+  text-decoration: line-through;
+  font-weight: 500;
+}
+
+.price-discount-tag {
+  background: var(--vermelho-desconto);
+  color: var(--branco);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.discount-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shine 2s infinite;
+}
+
+@keyframes shine {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+.price-current {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  margin-bottom: 12px;
+  gap: 4px;
+}
+
+.price-currency {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--azul-escuro);
+}
+
+.price-value {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: var(--azul-escuro);
+  line-height: 1;
+  background: var(--gradiente-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.price-period {
+  font-size: 1.1rem;
+  color: var(--cinza);
+  font-weight: 500;
+}
+
+.price-savings {
+  font-size: 0.9rem;
+  color: var(--verde-sucesso);
+  font-weight: 600;
+  background: rgba(16, 185, 129, 0.1);
+  padding: 6px 12px;
+  border-radius: 20px;
+  display: inline-block;
+}
+
+/* ======================================== */
+/* 4.5. Preço Customizado                   */
+/* ======================================== */
+
+.price-custom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+.price-sparkle {
+  color: var(--roxo-premium);
+  animation: sparkle 2s ease-in-out infinite alternate;
+}
+
+@keyframes sparkle {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  100% {
+    transform: rotate(180deg) scale(1.2);
+  }
+}
+
+.custom-price {
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: var(--gradiente-premium);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ======================================== */
+/* 4.6. Features dos Planos                 */
+/* ======================================== */
+
+.plan-features {
+  flex: 1;
+  padding: 30px;
+}
+
+.plan-custom-description {
+  font-size: 1rem;
+  color: var(--cinza);
+  margin-bottom: 30px;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+.plan-features ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(var(--azul-medio-rgb), 0.05);
+  opacity: 0;
+  transform: translateX(-20px);
+  animation: slideInLeft 0.5s ease-out forwards;
+  transition: var(--transition-smooth);
+}
+
+.feature-item:last-child {
+  border-bottom: none;
+}
+
+.feature-item:hover {
+  background: rgba(var(--azul-medio-rgb), 0.02);
+  padding-left: 8px;
+  border-radius: var(--border-radius);
+  margin: 0 -8px;
+}
+
+@keyframes slideInLeft {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.feature-icon-wrapper {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  transition: var(--transition-smooth);
+}
+
+.feature-icon.check {
+  color: var(--verde-sucesso);
+  background: rgba(16, 185, 129, 0.1);
+  border-radius: 50%;
+  padding: 2px;
+}
+
+.feature-icon.x {
+  color: var(--cinza);
+  background: rgba(100, 116, 139, 0.1);
+  border-radius: 50%;
+  padding: 2px;
+}
+
+.feature-text {
+  font-size: 0.95rem;
+  color: var(--cinza-escuro);
+  flex: 1;
+  font-weight: 500;
+  transition: var(--transition-smooth);
+}
+
+.feature-item.disabled .feature-text {
+  color: var(--cinza);
+  opacity: 0.7;
+}
+
+/* ======================================== */
+/* Feature Highlight - Nova Abordagem       */
+/* ======================================== */
+
+.feature-item.highlight {
+  background: rgba(var(--azul-medio-rgb), 0.03);
+  border-left: 3px solid var(--azul-medio);
+  border-radius: 0 8px 8px 0;
+  padding: 14px 16px 14px 20px;
+  margin: 6px 0;
+  position: relative;
+  transition: var(--transition-smooth);
+}
+
+.feature-item.highlight::after {
+  content: '';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  background: var(--azul-medio);
+  border-radius: 50%;
+  opacity: 0.6;
+}
+
+.feature-item.highlight .feature-text {
+  color: var(--azul-medio);
+  font-weight: 600;
+}
+
+.feature-item.highlight .feature-icon.check {
+  background: var(--azul-medio);
+  color: var(--branco);
+  transform: scale(1.05);
+}
+
+/* Hover suave para features destacadas */
+.feature-item.highlight:hover {
+  background: rgba(var(--azul-medio-rgb), 0.06);
+  border-left-color: var(--azul-claro);
+  transform: translateX(4px);
+}
+
+.feature-item.highlight:hover::after {
+  opacity: 1;
+  transform: translateY(-50%) scale(1.2);
+}
+
+/* Ajuste para card personalizado */
+.plan-card.custom .feature-item.highlight {
+  background: rgba(255, 255, 255, 0.05);
+  border-left-color: var(--roxo-premium);
+}
+
+.plan-card.custom .feature-item.highlight::after {
+  background: var(--roxo-premium);
+}
+
+.plan-card.custom .feature-item.highlight .feature-text {
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 600;
+}
+
+.plan-card.custom .feature-item.highlight .feature-icon.check {
+  background: var(--roxo-premium);
+  color: var(--branco);
+}
+
+.plan-card.custom .feature-item.highlight:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-left-color: #A78BFA;
+}
+
+/* Remoção da estrela (mantém invisível) */
+.feature-star {
+  display: none;
+}
+
+/* ======================================== */
+/* 4.7. Botões dos Cards                    */
+/* ======================================== */
+
+.plan-button {
+  margin: 30px;
+  padding: 16px 32px;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition-bounce);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.subscribe-button {
+  background: var(--gradiente-primary);
+  color: var(--branco);
+  box-shadow: var(--shadow-lg);
+}
+
+.subscribe-button:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: var(--shadow-2xl);
+}
+
+.contact-button {
+  background: var(--gradiente-premium);
+  color: var(--branco);
+  box-shadow: var(--shadow-lg);
+}
+
+.contact-button:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: var(--shadow-premium);
+}
+
+.popular-button {
+  background: var(--gradiente-premium);
+  transform: scale(1.05);
+}
+
+.popular-button:hover {
+  transform: scale(1.05) translateY(-4px);
+}
+
+.button-icon {
+  transition: var(--transition-smooth);
+}
+
+.plan-button:hover .button-icon {
+  transform: translateX(4px);
+}
+
+.button-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: var(--transition-smooth);
+}
+
+.plan-button:hover .button-shine {
+  left: 100%;
+  transition: left 0.6s ease;
+}
+
+/* ======================================== */
+/* 4.8. Card Personalizado - Animações      */
+/* ======================================== */
+
+.plan-card.custom {
+  background: var(--gradiente-custom);
+  border: 2px solid var(--roxo-premium);
+  color: var(--branco);
+  box-shadow: var(--shadow-custom);
+  position: relative;
+  overflow: hidden;
+}
+
+.plan-card.custom:hover {
+  transform: translateY(-16px) scale(1.02);
+  box-shadow: var(--shadow-custom);
+  border-color: var(--roxo-premium);
+}
+
+.plan-card.custom .plan-header {
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.plan-card.custom h3,
+.plan-card.custom .feature-text {
+  color: var(--branco);
+}
+
+.plan-card.custom .plan-custom-description {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.plan-card.custom .feature-item {
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.plan-card.custom .feature-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.plan-card.custom .plan-badge {
+  background: var(--gradiente-premium);
+}
+
+/* Animação do background do card personalizado */
+.custom-background-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.floating-particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--roxo-premium);
+  border-radius: 50%;
+  animation-duration: 15s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  opacity: 0.6;
+}
+
+.particle-1 {
+  top: 20%;
+  left: 10%;
+  animation-name: float1;
+  animation-delay: 0s;
+}
+
+.particle-2 {
+  top: 60%;
+  left: 80%;
+  animation-name: float2;
+  animation-delay: -5s;
+}
+
+.particle-3 {
+  top: 80%;
+  left: 20%;
+  animation-name: float3;
+  animation-delay: -10s;
+}
+
+.particle-4 {
+  top: 10%;
+  left: 70%;
+  animation-name: float4;
+  animation-delay: -2s;
+}
+
+.particle-5 {
+  top: 40%;
+  left: 50%;
+  animation-name: float5;
+  animation-delay: -7s;
+}
+
+.particle-6 {
+  top: 70%;
+  left: 90%;
+  animation-name: float6;
+  animation-delay: -12s;
+}
+
+@keyframes float1 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-30px) rotate(120deg); }
+  66% { transform: translateY(15px) rotate(240deg); }
+}
+
+@keyframes float2 {
+  0%, 100% { transform: translateX(0px) rotate(0deg); }
+  50% { transform: translateX(-25px) rotate(180deg); }
+}
+
+@keyframes float3 {
+  0%, 100% { transform: translate(0px, 0px) rotate(0deg); }
+  25% { transform: translate(15px, -20px) rotate(90deg); }
+  50% { transform: translate(-10px, -10px) rotate(180deg); }
+  75% { transform: translate(-20px, 10px) rotate(270deg); }
+}
+
+@keyframes float4 {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-40px) scale(1.2); }
+}
+
+@keyframes float5 {
+  0%, 100% { transform: rotate(0deg) translateX(0px); }
+  25% { transform: rotate(90deg) translateX(20px); }
+  50% { transform: rotate(180deg) translateX(0px); }
+  75% { transform: rotate(270deg) translateX(-20px); }
+}
+
+@keyframes float6 {
+  0%, 100% { transform: translateX(0px) translateY(0px); }
+  33% { transform: translateX(-15px) translateY(-25px); }
+  66% { transform: translateX(20px) translateY(-10px); }
+}
+
+/* Ondas animadas */
+.wave-animation {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--gradiente-custom-animated);
+  background-size: 400% 400%;
+  animation: gradientShift 8s ease-in-out infinite;
+  opacity: 0.1;
+}
+
+.wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200%;
+  height: 100px;
+  background: linear-gradient(90deg, transparent, rgba(var(--roxo-premium-rgb), 0.1), transparent);
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+.wave-1 {
+  animation: wave1 12s infinite;
+  animation-delay: 0s;
+}
+
+.wave-2 {
+  animation: wave2 10s infinite;
+  animation-delay: -2s;
+  opacity: 0.5;
+}
+
+.wave-3 {
+  animation: wave3 14s infinite;
+  animation-delay: -4s;
+  opacity: 0.3;
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes wave1 {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0px);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+}
+
+@keyframes wave2 {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0px);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-15px);
+  }
+}
+
+@keyframes wave3 {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0px);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-8px);
+  }
+}
+
+/* ======================================== */
+/* 5. Garantia de Satisfação                */
+/* ======================================== */
+
+.plans-guarantee {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background: var(--branco-soft);
+  padding: 30px 40px;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(var(--azul-medio-rgb), 0.08);
+  max-width: 600px;
+  margin: 0 auto;
+  animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+.plans-guarantee svg {
+  color: var(--verde-sucesso);
+  background: rgba(16, 185, 129, 0.1);
+  padding: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.guarantee-content {
+  text-align: left;
+}
+
+.guarantee-content strong {
+  display: block;
+  font-size: 1.1rem;
+  color: var(--azul-escuro);
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.guarantee-content p {
+  color: var(--cinza);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ======================================== */
+/* 6. Responsividade                        */
+/* ======================================== */
+
+/* Mobile Extra Small */
+@media (max-width: 480px) {
+  .plans-section {
+    padding: 80px 16px;
+  }
+
+  .plans-container h2 {
+    font-size: 2rem;
+    margin-bottom: 16px;
+  }
+
+  .plans-subtitle {
+    font-size: 1rem;
+    margin-bottom: 32px;
+  }
+
+  .plans-features-preview {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .preview-item {
+    font-size: 0.9rem;
+  }
+
+  .plans-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-bottom: 60px;
+  }
+
+  .plan-card {
+    margin: 0 8px;
+  }
+
+  .plan-card.popular {
+    transform: none;
+    margin: 0 8px;
+  }
+
+  .plan-card.popular:hover {
+    transform: translateY(-8px);
+  }
+
+  .plan-header {
+    padding: 30px 20px 20px;
+  }
+
+  .plan-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 16px;
+  }
+
+  .plan-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+
+  .plan-stats {
+    padding: 16px 20px;
+    margin: 0 20px;
+    gap: 16px;
+  }
+
+  .stat-number {
+    font-size: 1.1rem;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+  }
+
+  .plan-price {
+    padding: 30px 20px;
+  }
+
+  .price-value {
+    font-size: 2.5rem;
+  }
+
+  .price-currency {
+    font-size: 1.2rem;
+  }
+
+  .price-period {
+    font-size: 1rem;
+  }
+
+  .custom-price {
+    font-size: 2rem;
+  }
+
+  .plan-features {
+    padding: 20px;
+  }
+
+  .feature-item {
+    padding: 10px 0;
+    gap: 10px;
+  }
+
+  .feature-text {
+    font-size: 0.9rem;
+  }
+
+  .plan-button {
+    margin: 20px;
+    padding: 14px 24px;
+    font-size: 1rem;
+  }
+
+  .plans-guarantee {
+    flex-direction: column;
+    text-align: center;
+    padding: 24px 20px;
+    margin: 0 16px;
+  }
+
+  .guarantee-content {
+    text-align: center;
+  }
+
+  .guarantee-content strong {
+    font-size: 1rem;
+  }
+
+  .guarantee-content p {
+    font-size: 0.9rem;
+  }
+}
+
+/* Mobile Small */
+@media (max-width: 640px) {
+  .plans-hero {
+    margin-bottom: 60px;
+  }
+
+  .plans-features-preview {
+    gap: 20px;
+  }
+
+  .plan-popular-tag {
+    font-size: 0.8rem;
+    padding: 6px 40px;
+  }
+
+  .price-discount-wrapper {
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .price-original {
+    font-size: 1rem;
+  }
+
+  .price-savings {
+    font-size: 0.85rem;
+    padding: 4px 8px;
+  }
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .plans-section {
+    padding: 100px 20px;
+  }
+
+  .plans-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 28px;
+  }
+
+  .plan-card.popular {
+    transform: scale(1.02);
+  }
+
+  .plan-card.popular:hover {
+    transform: scale(1.02) translateY(-12px);
+  }
+
+  .plans-guarantee {
+    padding: 28px 32px;
+  }
+}
+
+/* Desktop Small */
+@media (max-width: 1024px) {
+  .plans-container {
+    max-width: 1200px;
+  }
+
+  .plans-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+  }
+}
+
+/* Desktop Large */
+@media (min-width: 1400px) {
+  .plans-container {
+    max-width: 1600px;
+  }
+
+  .plans-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 36px;
+  }
+
+  .plan-card {
+    max-width: 380px;
+  }
+}
+
+/* ======================================== */
+/* 7. Acessibilidade                        */
+/* ======================================== */
+
+/* Foco para navegação por teclado */
+.plan-button:focus {
+  outline: 3px solid var(--azul-medio);
+  outline-offset: 2px;
+}
+
+.plan-card:focus-within {
+  box-shadow: var(--shadow-2xl);
+  border-color: var(--azul-medio);
+}
+
+/* Redução de movimento para usuários sensíveis */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .plan-card {
+    animation: none;
+  }
+
+  .feature-item {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .plans-section {
+    opacity: 1;
+    transform: none;
+  }
+
+  .particle,
+  .wave,
+  .custom-background-animation {
+    animation: none !important;
+  }
+
+  .discount-shine,
+  .button-shine {
+    animation: none !important;
+  }
+
+  .feature-star {
+    animation: none !important;
+  }
+
+  .price-sparkle {
+    animation: none !important;
+  }
+}
+
+/* ======================================== */
+/* 8. Estados de Loading e Interação        */
+/* ======================================== */
+
+.plan-button:active {
+  transform: scale(0.98);
+}
+
+.plan-card:active {
+  transform: scale(0.99);
+}
+
+/* Loading state para cards */
+.plan-card.loading {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ======================================== */
+/* 9. Variações de Tema (Preparação)        */
+/* ======================================== */
+
+.plans-section.dark-theme {
+  --branco: #0F172A;
+  --branco-soft: #1E293B;
+  --cinza-light: #334155;
+  --azul-escuro: #FFFFFF;
+  --cinza-escuro: #E2E8F0;
+  --cinza: #94A3B8;
+}
+
+/* ======================================== */
+/* 10. Prints e Outros                      */
+/* ======================================== */
+
+@media print {
+  .plans-section {
+    background: white !important;
+    box-shadow: none !important;
+  }
+
+  .plan-card {
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+    page-break-inside: avoid;
+  }
+
+  .plan-button {
+    background: #333 !important;
+    color: white !important;
+  }
+}
+
+/* ======================================== */
+/* 11. Ajustes Finais e Polimentos          */
+/* ======================================== */
+
+/* Smooth scrolling para links internos */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Seleção de texto personalizada */
+::selection {
+  background: rgba(var(--azul-medio-rgb), 0.2);
+  color: var(--azul-escuro);
+}
+
+::-moz-selection {
+  background: rgba(var(--azul-medio-rgb), 0.2);
+  color: var(--azul-escuro);
+}
+
+/* Scrollbar personalizada para webkit */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--cinza-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--azul-medio);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--azul-claro);
+}
+
+/* Performance otimizations */
+.plan-card,
+.plan-button,
+.feature-item {
+  will-change: transform;
+}
+
+.plan-card:hover,
+.plan-button:hover {
+  will-change: auto;
+}
+/* ===== Adições: Billing toggle e pequenos ajustes ===== */
+
+.billing-toggle-wrapper {
+  text-align: center;
+  margin-top: 18px;
+}
+
+.billing-toggle {
+  display: inline-flex;
+  background: rgba(15,23,42,0.04);
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 8px;
+}
+
+.toggle-btn {
+  padding: 10px 20px;
+  border: none;
+  background: transparent;
+  color: var(--cinza);
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toggle-btn.active {
+  background: var(--branco);
+  color: var(--azul-medio);
+  box-shadow: var(--shadow-sm);
+}
+
+.savings-badge {
+  background: var(--verde-sucesso);
+  color: var(--branco);
+  font-size: 0.72rem;
+  padding: 2px 6px;
+  border-radius: 6px;
+  margin-left: 8px;
+  font-weight: 700;
+}
+
+.toggle-subtitle {
+  color: var(--cinza);
+  font-size: 0.9rem;
+  margin-top: 6px;
+}
+
+/* Pequeno ajuste visual para price-container já existente */
+.price-container.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Ajuste para a tag de desconto (já existente como price-discount-tag) */
+.price-discount-tag {
+  background: var(--vermelho-desconto);
+  color: var(--branco);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+/* Responsivo: manter toggle leve em mobile */
+@media (max-width: 640px) {
+  .billing-toggle {
+    padding: 2px;
+  }
+  .toggle-btn {
+    padding: 8px 12px;
+    font-size: 0.95rem;
+  }
+  .savings-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    font-size: 0.7rem;
+  }
+}

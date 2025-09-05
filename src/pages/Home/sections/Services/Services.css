@@ -1,0 +1,429 @@
+@charset "UTF-8";
+/* Paleta de Cores */
+:root {
+  --azul-escuro: #043959;
+  --azul-medio: #466FA6;
+  --azul-claro: #8EA3BF;
+  --cinza: #A8B5BF;
+  --branco: #F2F2F2;
+  
+  /* Variáveis para cores RGB */
+  --azul-claro-rgb: 231, 246, 255;
+  --azul-medio-rgb: 36, 123, 160;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+html {
+  scroll-padding-top: 80px; /* Ajuste esse valor de acordo com a altura do seu header */
+}
+
+
+body {
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+:root {
+  --azul-escuro: #052f45;
+  --azul-medio: #0a5685;
+  --azul-claro: #4db5ff;
+  --branco: #ffffff;
+  --cinza: #e0e0e0;
+}
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
+  padding-top: 70px; /* Apenas um valor de padding-top */
+  overflow-x: hidden;
+  background-color: var(--azul-medio);
+}
+
+
+/* Etapa 3 - Serviços Interativos */
+.servicos {
+  min-height: 100vh;
+  padding: 100px 20px;
+  background: var(--azul-claro);
+  background: linear-gradient(135deg, var(--azul-claro) 0%, #e8f4f8 100%);
+  color: var(--azul-escuro);
+}
+
+.servicos-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.servicos h2 {
+  font-size: 2.5rem;
+  margin-bottom: 60px;
+  color: var(--azul-escuro);
+  position: relative;
+  display: inline-block;
+}
+
+.servicos h2::after {
+  content: "";
+  position: absolute;
+  width: 80px;
+  height: 4px;
+  background: var(--azul-medio);
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+.grid-servicos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Novo estilo de cartão para serviços */
+.servico-card {
+  position: relative;
+  height: 280px;
+  background: var(--branco);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  text-align: center;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.servico-card:hover {
+  transform: translateY(-15px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+}
+
+.servico-icon {
+  width: 70px;
+  height: 70px;
+  background: rgba(var(--azul-medio-rgb), 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+/* força o svg do react-icons a escalar no tamanho desejado */
+.servico-icon svg {
+  font-size: 1.6rem;  /* antes estava em ~2rem */
+  transition: all 0.3s ease;
+}
+
+.servico-card:hover .servico-icon {
+  background: var(--azul-medio);
+  transform: scale(1.1);
+}
+
+.servico-icon i {
+  font-size: 2rem;
+  color: var(--azul-medio);
+  transition: all 0.3s ease;
+}
+
+.servico-card:hover .servico-icon i {
+  color: var(--branco);
+}
+
+.servico-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+  color: var(--azul-escuro);
+  transition: all 0.3s ease;
+}
+
+.servico-descricao {
+  font-size: 0.9rem;
+  color: #667;
+  line-height: 1.5;
+}
+
+/* Overlay de detalhes */
+.servico-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--azul-escuro);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s ease;
+  transform: translateY(20px);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.servico-card:hover .servico-overlay {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.servico-detalhes {
+  color: var(--branco);
+  width: 100%;
+}
+
+.servico-detalhes h4 {
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  color: var(--branco);
+}
+
+.servico-detalhes ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+  text-align: center;
+}
+
+.servico-detalhes ul li {
+  font-size: 0.9rem;
+  padding: 5px 0;
+  position: relative;
+}
+
+.servico-link {
+  display: inline-block;
+  padding: 8px 20px;
+  background: var(--azul-medio);
+  color: var(--branco);
+  border-radius: 30px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.servico-link:hover {
+  background: var(--branco);
+  color: var(--azul-escuro);
+  transform: translateY(-3px);
+}
+
+/* CTA para Planos */
+.cta-planos {
+  text-align: center;
+  padding: 60px 20px 20px;
+  background: transparent;
+}
+
+.cta-texto {
+  font-size: 1.8rem;
+  color: var(--azul-escuro);
+  margin-bottom: 25px;
+  font-weight: 600;
+}
+
+.cta-botao {
+  padding: 16px 45px;
+  background: var(--azul-medio);
+  color: var(--branco);
+  border: none;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 0 5px 15px rgba(4, 57, 89, 0.2);
+}
+
+.cta-botao:hover {
+  background: var(--azul-escuro);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(4, 57, 89, 0.3);
+}
+
+/* Animação ao carregar */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.servico-card {
+  animation: fadeInUp 0.6s ease forwards;
+  opacity: 0;
+}
+
+.servico-card:nth-child(1) { animation-delay: 0.1s; }
+.servico-card:nth-child(2) { animation-delay: 0.2s; }
+.servico-card:nth-child(3) { animation-delay: 0.3s; }
+.servico-card:nth-child(4) { animation-delay: 0.4s; }
+.servico-card:nth-child(5) { animation-delay: 0.5s; }
+
+/* Atualizações para Services.css - Adicione estas regras ao seu arquivo existente */
+
+/* Melhoria no botão "Saiba mais" para funcionar como button */
+.servico-link {
+  display: inline-block;
+  padding: 8px 20px;
+  background: var(--azul-medio);
+  color: var(--branco);
+  border-radius: 30px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: none; /* Para quando for button */
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.servico-link:hover {
+  background: var(--branco);
+  color: var(--azul-escuro);
+  transform: translateY(-3px);
+}
+
+/* Melhoria nos ícones dos serviços para compatibilidade com react-icons */
+.servico-icon svg {
+  font-size: 1.6rem;
+  color: var(--azul-medio);
+  transition: all 0.3s ease;
+}
+
+.servico-card:hover .servico-icon svg {
+  color: var(--branco);
+}
+
+/* Responsividade aprimorada para os cartões */
+@media (max-width: 768px) {
+  .grid-servicos {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 10px;
+  }
+  
+  .servico-card {
+    height: auto;
+    min-height: 280px;
+  }
+  
+  .servicos h2 {
+    font-size: 2rem;
+    margin-bottom: 40px;
+  }
+  
+  .servicos {
+    padding: 60px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .servicos h2 {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+  }
+  
+  .servico-card {
+    padding: 25px 15px;
+    height: auto;
+    min-height: 260px;
+  }
+  
+  .servico-icon {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 15px;
+  }
+  
+  .servico-icon svg {
+    font-size: 1.4rem;
+  }
+  
+  .servico-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+  }
+  
+  .servico-descricao {
+    font-size: 0.85rem;
+  }
+  
+  .cta-texto {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .cta-botao {
+    padding: 14px 35px;
+    font-size: 1rem;
+  }
+}
+
+/* Melhorias de acessibilidade */
+.servico-link:focus {
+  outline: 2px solid var(--azul-escuro);
+  outline-offset: 2px;
+}
+
+.cta-botao:focus {
+  outline: 2px solid var(--azul-escuro);
+  outline-offset: 2px;
+}
+
+/* Animações mais suaves */
+.servico-card {
+  will-change: transform;
+}
+
+.servico-overlay {
+  will-change: opacity, transform;
+}
+
+/* Estados de hover aprimorados */
+@media (hover: hover) {
+  .servico-card:hover .servico-overlay {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
+
+/* Para dispositivos touch, melhor interação */
+@media (hover: none) {
+  .servico-overlay {
+    opacity: 0;
+    visibility: hidden;
+  }
+  
+  .servico-card:active .servico-overlay {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}

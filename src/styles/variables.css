@@ -1,0 +1,11 @@
+:root {
+  --azul-escuro: #043959;
+  --azul-medio: #466FA6;
+  --azul-claro: #8EA3BF;
+  --cinza: #A8B5BF;
+  --branco: #F2F2F2;
+  
+  /* Variáveis para cores RGB */
+  --azul-claro-rgb: 231, 246, 255;
+  --azul-medio-rgb: 36, 123, 160;
+}

@@ -1,0 +1,174 @@
+@charset "UTF-8";
+/* Paleta de Cores */
+:root {
+  --azul-escuro: #043959;
+  --azul-medio: #466FA6;
+  --azul-claro: #8EA3BF;
+  --cinza: #A8B5BF;
+  --branco: #F2F2F2;
+  
+  /* Variáveis para cores RGB */
+  --azul-claro-rgb: 231, 246, 255;
+  --azul-medio-rgb: 36, 123, 160;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+html {
+  scroll-padding-top: 80px; /* Ajuste esse valor de acordo com a altura do seu header */
+}
+
+
+body {
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Sessão Sócios */
+.socios {
+  min-height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background: linear-gradient(45deg, #0a192f, #172a45);
+  gap: 4rem;
+}
+
+.socio-card {
+  position: relative;
+  width: 350px;
+  height: 500px;
+  border-radius: 20px;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.socio-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+}
+
+.socio-img-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.socio-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.socio-card:hover .socio-img {
+  transform: scale(1.1);
+}
+
+.socio-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+
+.socio-card:hover .socio-overlay {
+  opacity: 1;
+}
+
+.yan-overlay {
+  background: linear-gradient(45deg, rgba(14, 78, 173, 0.3), rgba(42, 120, 228, 0.3));
+}
+
+.tech-overlay {
+  background: linear-gradient(45deg, rgba(88, 28, 135, 0.3), rgba(160, 68, 255, 0.3));
+}
+
+.overlay-content {
+  text-align: center;
+  transform: translateZ(30px);
+}
+
+.icones-animados {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  justify-content: center; /* Adicione esta linha */
+}
+
+.icone {
+  font-size: 2.5rem;
+  color: rgba(255, 255, 255, 0.9);
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
+}
+
+.icone:hover {
+  transform: translateY(-5px) scale(1.2);
+  filter: drop-shadow(0 5px 15px rgba(255,255,255,0.3));
+}
+
+.socio-nome {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 1rem;
+  font-family: 'Poppins', sans-serif;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.socio-divider {
+  width: 50px;
+  height: 2px;
+  background: rgba(255,255,255,0.3);
+  margin: 1rem auto;
+  transition: width 0.3s ease;
+}
+
+.socio-card:hover .socio-divider {
+  width: 100px;
+}
+
+.socio-skills {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.8;
+  font-family: 'Inter', sans-serif;
+}
+
+@media (max-width: 768px) {
+  .socios {
+    padding: 2rem 1rem;
+  }
+  
+  .socio-card {
+    width: 100%;
+    max-width: 300px;
+    height: 450px;
+  }
+}
+

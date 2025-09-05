@@ -1,0 +1,401 @@
+/* src/components/ServiceModal.css */
+
+:root {
+  --modal-z-index: 9999;
+  --backdrop-color: rgba(0, 0, 0, 0.75);
+  --modal-bg: #fff;
+  --modal-radius: 20px;
+  --modal-shadow: 0 25px 50px rgba(0,0,0,0.25);
+  --smooth: all 0.3s cubic-bezier(0.4,0,0.2,1);
+  --azul-escuro: #052f45;
+  --azul-medio: #0a5685;
+  --azul-claro: #4db5ff;
+}
+
+/* BACKDROP */
+.service-modal-backdrop {
+  position: fixed; inset: 0;
+  background: var(--backdrop-color);
+  display: flex; align-items: center; justify-content: center;
+  z-index: var(--modal-z-index);
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.3s ease-out;
+  padding: 20px;
+}
+@keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+
+/* CONTAINER */
+.service-modal-container {
+  background: var(--modal-bg);
+  border-radius: var(--modal-radius);
+  box-shadow: var(--modal-shadow);
+  max-width: 900px; width: 100%;
+  max-height: 90vh; overflow: hidden;
+  display: flex; flex-direction: column;
+  animation: slideUp 0.3s ease-out;
+  position: relative;
+}
+@keyframes slideUp {
+  from {opacity:0; transform:translateY(30px) scale(0.95);}
+  to   {opacity:1; transform:translateY(0) scale(1);}
+}
+
+/* HEADER */
+.service-modal-header {
+  display: flex; 
+  justify-content: center; /* Centraliza o conteúdo */
+  align-items: center;
+  padding: 25px 30px;
+  border-bottom: 1px solid #e5e7eb;
+  background: linear-gradient(135deg, var(--azul-claro) 0%, #f8fafc 100%);
+  min-height: 80px;
+  position: relative; /* Para posicionar o botão de fechar */
+}
+
+
+.service-modal-title {
+  display: flex; 
+  align-items: center; 
+  gap: 12px;
+  font-size: 1.8rem; 
+  font-weight: 700;
+  margin: 0;
+  padding-left: 15px;
+}
+
+.service-modal-icon {
+  flex-shrink: 0;
+  font-size: 2.6rem;
+    padding-right: 15px;
+}
+
+
+.service-modal-title-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+  /* Removido o padding-left para ficar mais próximo do ícone */
+}
+
+.service-modal-close {
+  background: none; 
+  border: none; 
+  cursor: pointer;
+  padding: 8px; 
+  border-radius: 50%; 
+  transition: var(--smooth);
+  width: 40px; 
+  height: 40px; 
+  color: #6b7280;
+  flex-shrink: 0;
+  position: absolute; /* Posicionamento absoluto */
+  right: 30px; /* Alinha à direita */
+  top: 50%; /* Centraliza verticalmente */
+  transform: translateY(-50%); /* Ajuste fino da centralização vertical */
+}
+
+.service-modal-close:hover {
+  background: rgba(0,0,0,0.1);
+  color: var(--azul-escuro);
+  transform: translateY(-50%) scale(1.1); /* Mantém a centralização no hover */
+}
+
+/* GRID CONTENT */
+.service-modal-content {
+  flex: 1; display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* CARROSSEL - OCULTAR SETAS */
+.service-modal-carousel {
+  position: relative; background: #f8fafc;
+  overflow: hidden; /* Evita scroll lateral */
+}
+
+.carousel-root {
+  width: 100% !important;
+  overflow: hidden !important;
+}
+
+.carousel-slider {
+  overflow: hidden !important;
+}
+
+/* OCULTAR SETAS COMPLETAMENTE */
+.carousel .control-arrow {
+  display: none !important;
+}
+
+.carousel .control-prev,
+.carousel .control-next {
+  display: none !important;
+}
+
+.carousel-slide { 
+  display: flex; flex-direction: column; height: 100%;
+  min-width: 0; /* Evita overflow */
+}
+
+.carousel-image {
+  width: 100%; height: 300px; object-fit: cover;
+  background: linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  display: block;
+}
+.carousel-image[src] { background: none; animation: none; }
+@keyframes loading {
+  0% {background-position: 200% 0;} 100% {background-position: -200% 0;}
+}
+
+.carousel-caption {
+  padding: 15px 20px;
+  background: rgba(0,0,0,0.8);
+  color: #fff; font-size: 0.9rem;
+  text-align: center; margin-bottom: 0;
+  word-wrap: break-word;
+}
+
+/* INDICADORES acima da legenda */
+.carousel .control-dots {
+  bottom: 60px !important;
+  z-index: 3 !important;
+  margin: 0 !important;
+  padding: 0 10px !important;
+}
+
+.carousel-indicator {
+  width: 12px !important; height: 12px !important;
+  border-radius: 50% !important;
+  background: rgba(255,255,255,0.5) !important;
+  border: 2px solid #fff !important;
+  margin: 0 6px !important; cursor: pointer;
+  transition: var(--smooth);
+  display: inline-block !important;
+}
+.carousel-indicator.selected {
+  background: var(--azul-medio) !important;
+  transform: scale(1.2);
+}
+
+/* INFO & BENEFITS */
+.service-modal-info {
+  padding: 30px; 
+  overflow-y: auto;
+  min-width: 0; /* Permite quebra de linha */
+}
+
+.service-modal-description {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.service-modal-description p {
+  font-size: 1rem; line-height: 1.6; color: #374151;
+  margin: 0 0 20px 0;
+}
+
+.service-modal-benefits {
+  margin-top: 20px;
+}
+
+.service-modal-benefits h3 {
+  font-size: 1.2rem; font-weight: 600; color: var(--azul-escuro);
+  margin-bottom: 12px;
+}
+
+.service-modal-benefits ul {
+  list-style: none; padding: 0;
+}
+
+.service-modal-benefits ul li {
+  position: relative; padding-left: 20px; margin-bottom: 8px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.service-modal-benefits ul li::before {
+  content: '✓'; position: absolute; left: 0;
+  color: var(--azul-medio); font-weight: bold;
+}
+
+/* TECNOLOGIAS abaixo */
+.service-modal-tech {
+  padding: 20px 30px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.service-modal-tech h3 {
+  font-size: 1.2rem; font-weight: 600; color: var(--azul-escuro);
+  margin-bottom: 12px;
+}
+
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+/* chip moderno */
+.tech-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(240,249,255,1) 0%, rgba(229,241,250,1) 100%);
+  border: 1px solid rgba(10,86,133,0.08);
+  box-shadow: 0 6px 14px rgba(10,86,133,0.04);
+  font-size: 0.9rem;
+  color: var(--azul-escuro);
+  white-space: nowrap;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* hover suave */
+.tech-tag:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(10,86,133,0.08);
+  cursor: default;
+}
+.tech-tag.popular {
+  background: linear-gradient(90deg,#0a5685 0%, #4db5ff 100%);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 10px 26px rgba(13,77,110,0.18);
+}
+
+/* responsividade: permite quebra em telas pequenas e reduz padding */
+@media (max-width: 480px) {
+  .tech-tags { gap: 8px; }
+  .tech-tag { padding: 6px 10px; font-size: 0.82rem; }
+  .tech-tag.popular { padding: 6px 10px; font-size: 0.82rem; }
+}
+
+/* FOOTER */
+.service-modal-footer {
+  display: flex; justify-content: flex-end; gap: 12px;
+  padding: 25px 30px; border-top: 1px solid #e5e7eb;
+  background: #f8fafc;
+}
+
+.service-modal-cta,
+.service-modal-secondary {
+  padding: 12px 24px; border-radius: 8px;
+  font-size: 1rem; font-weight: 600; cursor: pointer;
+  transition: var(--smooth);
+  white-space: nowrap;
+}
+
+.service-modal-cta {
+  background: var(--azul-medio); color: #fff; border: none;
+}
+.service-modal-cta:hover {
+  background: var(--azul-escuro);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(10,86,133,0.3);
+}
+
+.service-modal-secondary {
+  background: transparent; border: 1px solid #d1d5db; color: #6b7280;
+}
+.service-modal-secondary:hover {
+  background: #f3f4f6; border-color: var(--azul-claro);
+}
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+  .service-modal-backdrop {
+    padding: 10px;
+  }
+  
+  .service-modal-content { 
+    grid-template-columns: 1fr; 
+  }
+  
+  .service-modal-carousel { 
+    order: -1; 
+  }
+  
+  .carousel-image { 
+    height: 250px; 
+  }
+  
+  .service-modal-header {
+    padding: 20px 20px;
+    min-height: 70px;
+  }
+  
+  .service-modal-title {
+    font-size: 1.5rem;
+    gap: 8px;
+  }
+  
+  .service-modal-icon {
+    font-size: 1.4rem;
+  }
+  
+  .service-modal-info {
+    padding: 20px;
+  }
+  
+  .service-modal-tech {
+    padding: 15px 20px;
+  }
+  
+  .service-modal-footer { 
+    flex-direction: column; 
+    padding: 20px;
+  }
+  
+  .service-modal-cta,
+  .service-modal-secondary { 
+    width: 100%; 
+    white-space: normal;
+  }
+}
+
+@media (max-width: 480px) {
+  .service-modal-backdrop {
+    padding: 5px;
+  }
+  
+  .carousel-image { 
+    height: 200px; 
+  }
+  
+  .service-modal-header {
+    padding: 15px 15px;
+    min-height: 60px;
+  }
+  
+  .service-modal-title { 
+    font-size: 1.3rem; 
+    gap: 6px;
+  }
+  
+  .service-modal-icon {
+    font-size: 1.2rem;
+  }
+  
+  .service-modal-info,
+  .service-modal-tech,
+  .service-modal-footer { 
+    padding: 15px; 
+  }
+  
+  .tech-tag { 
+    padding: 4px 8px; 
+    font-size: 0.8rem; 
+  }
+  
+  
+  .carousel-caption {
+    padding: 10px 15px;
+    font-size: 0.8rem;
+  }
+}
