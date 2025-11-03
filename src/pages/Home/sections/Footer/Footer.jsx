@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  ArrowRight, 
-  MapPin, 
-  Phone, 
-  Mail, 
-  Instagram, 
-  Send, 
+import {
+  ArrowRight,
+  MapPin,
+  Phone,
+  Mail,
+  Instagram,
+  Send,
   ChevronUp,
   TrendingUp,
   Users,
@@ -13,6 +13,7 @@ import {
   Copy,
   Check
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import './Footer.css';
 
 const Footer = () => {
@@ -20,6 +21,7 @@ const Footer = () => {
   const [email, setEmail] = useState('');
   const [tooltip, setTooltip] = useState({ show: false, text: '', x: 0, y: 0 });
   const [copiedItem, setCopiedItem] = useState(null);
+  const navigate = useNavigate();
 
   const contactData = {
     location: "Rua das Acácias, 123, Catolé, Campina Grande - PB, 58410-000",
@@ -78,6 +80,13 @@ const Footer = () => {
     }
   };
 
+  const handlePlansShortcut = () => {
+    const plansSection = document.getElementById('planos');
+    if (plansSection) {
+      plansSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
     <footer id="contato" className="footer">
       {/* Tooltip */}
@@ -123,8 +132,35 @@ const Footer = () => {
       <div className="footer-content">
         {/* Seção Principal */}
         <div className="footer-main">
+          <div className="footer-cta-banner">
+            <div className="footer-cta-text">
+              <span className="footer-cta-kicker">Parcerias estratégicas</span>
+              <h2>Pronto para acelerar sua cultura de dados?</h2>
+              <p>
+                Combine tecnologia, estratégia e pessoas com a A2 Data. Construímos soluções completas para BI,
+                automações e produtos digitais que se conectam ao seu negócio.
+              </p>
+            </div>
+            <div className="footer-cta-actions">
+              <button
+                type="button"
+                className="footer-cta-button primary"
+                onClick={() => navigate('/demo/agendar-demo')}
+              >
+                <ArrowRight size={18} /> Agendar demo guiada
+              </button>
+              <button
+                type="button"
+                className="footer-cta-button secondary"
+                onClick={handlePlansShortcut}
+              >
+                Ver planos e pacotes
+              </button>
+            </div>
+          </div>
+
           <div className="footer-grid">
-            
+
             {/* Coluna da Marca */}
             <div className="brand-column">
               <div className="brand-info">

@@ -110,6 +110,24 @@ const Hero = () => {
             </button>
           </div>
 
+          <div className="hero-mobile-grid">
+            <div className="hero-mobile-card">
+              <span className="hero-mobile-kicker">Dashboards</span>
+              <strong>Insights em tempo real</strong>
+              <p>Visualize indicadores chave em minutos com curadoria especializada.</p>
+            </div>
+            <div className="hero-mobile-card">
+              <span className="hero-mobile-kicker">Automação</span>
+              <strong>Fluxos inteligentes</strong>
+              <p>Elimine tarefas repetitivas com bots e integrações confiáveis.</p>
+            </div>
+            <div className="hero-mobile-card">
+              <span className="hero-mobile-kicker">AI Studio</span>
+              <strong>Modelos sob medida</strong>
+              <p>Leve machine learning para decisões que movem o negócio.</p>
+            </div>
+          </div>
+
           <div className="hero-stats">
             <div className="stat-item">
               <span className="stat-number">97%</span>
