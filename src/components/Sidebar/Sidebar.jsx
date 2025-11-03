@@ -11,23 +11,11 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
     } else {
       document.body.style.overflow = '';
     }
-
+    
     return () => {
       document.body.style.overflow = '';
     };
   }, [isOpen]);
-
-  // Fecha o sidebar automaticamente quando a viewport deixa de ser mobile
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 1024 && isOpen) {
-        closeSidebar();
-      }
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [isOpen, closeSidebar]);
 
   // Fechar o sidebar quando um link é clicado
   const handleLinkClick = () => {

@@ -502,22 +502,172 @@ body {
 
 @media (max-width: 1024px) {
   .hero {
+    height: auto;
     min-height: 100vh;
     padding: 100px 0 80px;
   }
-
+  
   .hero-content {
     grid-template-columns: 1fr;
-    gap: 48px;
-    padding: 0 32px;
+    gap: 60px;
+    text-align: center;
+    padding: 0 24px;
   }
-
-  .hero-text {
-    align-items: flex-start;
+  
+  .hero-badge {
+    margin: 0 auto 8px;
   }
-
+  
   .hero-description {
-    max-width: 620px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .cta-group {
+    justify-content: center;
+  }
+  
+  .hero-stats {
+    justify-content: center;
+  }
+  
+  .card-1 {
+    top: 5%;
+    left: -10%;
+  }
+  
+  .card-2 {
+    bottom: 10%;
+    right: -10%;
+  }
+  
+  .card-3 {
+    top: 40%;
+    left: -15%;
+  }
+  
+  .hero-visual {
+    padding-bottom: 70px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 80px 0 100px;
+  }
+  
+  .hero-content {
+    gap: 40px;
+    padding: 0 20px;
+  }
+  
+  .animated-heading {
+    font-size: clamp(2.5rem, 8vw, 3.5rem);
+  }
+  
+  .hero-description {
+    font-size: 1.1rem;
+  }
+  
+  .cta-group {
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  
+  .cta-primary, .cta-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .hero-stats {
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+  
+  .floating-card {
+    padding: 16px;
+    min-width: 160px;
+  }
+  
+  .card-1, .card-3 {
+    left: 0;
+  }
+  
+  .card-2 {
+    right: 0;
+  }
+  
+  .hero-scroll {
+    margin-top: 20px;
+    bottom: 50px;
+  }
+
+  .hero-visual {
+    padding-bottom: 70px;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero {
+    padding: 60px 0 120px;
+  }
+  
+  .hero-content {
+    gap: 32px;
+    padding: 0 16px;
+  }
+  
+  .hero-badge {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+    margin-top: 10%;
+  }
+  
+  .hero-description {
+    font-size: 1rem;
+  }
+  
+  .cta-primary, .cta-secondary {
+    padding: 14px 24px;
+    font-size: 0.9rem;
+  }
+  
+  .hero-stats {
+    gap: 24px;
+  }
+  
+  .stat-number {
+    font-size: 2rem;
+  }
+  
+  .floating-card {
+    padding: 12px;
+    min-width: 140px;
+    gap: 12px;
+  }
+  
+  .card-icon {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .card-title {
+    font-size: 0.85rem;
+  }
+  
+  .card-subtitle {
+    font-size: 0.75rem;
+  }
+  
+  .hero-scroll {
+    bottom: 40px;
+  }
+  
+  .scroll-icon {
+    width: 35px;
+    height: 35px;
   }
 
   .hero-visual {
@@ -525,193 +675,30 @@ body {
   }
 }
 
-@media (max-width: 768px) {
-  .hero {
-    height: auto;
-    min-height: 100vh;
-    padding: 120px 20px 60px;
-    background: linear-gradient(180deg, rgba(4, 57, 89, 0.95) 0%, rgba(8, 68, 104, 0.92) 45%, rgba(10, 78, 122, 0.88) 100%);
-    align-items: flex-start;
-  }
-
-  .particles-container {
-    opacity: 0.25;
-  }
-
-  .hero-content {
-    display: flex;
-    flex-direction: column-reverse;
-    padding: 0;
-    gap: 32px;
-    text-align: left;
-  }
-
-  .hero-text {
-    background: rgba(4, 57, 89, 0.45);
-    border-radius: 24px;
-    padding: 28px 24px;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 25px 50px -20px rgba(0, 0, 0, 0.45);
-  }
-
-  .hero-badge {
-    margin: 0 0 12px;
-  }
-
-  .animated-heading {
-    font-size: clamp(2rem, 7vw, 2.8rem);
-  }
-
-  .hero-description {
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.85);
-  }
-
-  .cta-group {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .cta-group button {
-    width: 100%;
-  }
-
-  .hero-mobile-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 12px;
-    margin: 12px 0 24px;
-  }
-
-  .hero-mobile-card {
-    background: rgba(6, 84, 125, 0.55);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 18px;
-    padding: 16px 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    box-shadow: 0 18px 35px -22px rgba(0, 0, 0, 0.6);
-  }
-
-  .hero-mobile-card strong {
-    font-size: 0.95rem;
-    color: #fff;
-    line-height: 1.25;
-  }
-
-  .hero-mobile-card p {
-    font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.75);
-    line-height: 1.35;
-  }
-
-  .hero-mobile-kicker {
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.55);
-  }
-
-  .hero-visual {
-    width: 100%;
-    margin: 0;
-    position: relative;
-  }
-
-  .hero-image-container {
-    border-radius: 26px;
-    padding: 6px;
-    background: linear-gradient(135deg, rgba(142, 163, 191, 0.25), rgba(255, 255, 255, 0.05));
-  }
-
-  .hero-main-image {
-    height: 260px;
-    border-radius: 20px;
-  }
-
-  .image-overlay {
-    border-radius: 20px;
-  }
-
-  .floating-card {
-    display: none;
-  }
-
-  .hero-stats {
-    margin-top: 18px;
-    padding: 14px 16px;
-    background: rgba(6, 84, 125, 0.5);
-    border-radius: 18px;
-    gap: 12px;
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
-
-  .stat-item {
-    flex: 1 1 100px;
-  }
-
-  .hero-scroll {
-    position: static;
-    margin-top: 24px;
-  }
-}
-
-@media (max-width: 576px) {
-  .hero {
-    padding: 100px 18px 60px;
-  }
-
-  .hero-text {
-    padding: 24px 20px;
-  }
-
-  .hero-mobile-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .hero-mobile-card {
-    padding: 14px 12px;
-  }
-
-  .hero-main-image {
-    height: 220px;
-  }
-
-  .hero-stats {
-    gap: 18px;
-  }
-}
-
 @media (max-width: 375px) {
   .hero {
-    padding: 90px 16px 50px;
+    padding: 60px 0 140px;
   }
-
-  .hero-text {
-    padding: 22px 18px;
-  }
-
-  .hero-mobile-grid {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-
-  .hero-mobile-card {
-    padding: 12px;
-  }
-
-  .hero-stats {
-    gap: 14px;
-  }
-
+  
   .animated-heading {
-    font-size: clamp(1.9rem, 9vw, 2.5rem);
+    font-size: clamp(2rem, 10vw, 2.8rem);
   }
-
+  
   .hero-description {
     font-size: 0.95rem;
+  }
+  
+  .stat-number {
+    font-size: 1.8rem;
+  }
+  
+  .floating-card {
+    padding: 10px;
+    gap: 10px;
+  }
+  
+  .hero-scroll {
+    bottom: 30px;
   }
 }
 

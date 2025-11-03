@@ -219,48 +219,39 @@ const AgendarDemo = () => {
     const leadId = generateLeadId();
     const selectedServiceNames = form.interestedServices
       .map(id => services.find(s => s.id === id)?.name)
-      .filter(Boolean);
+      .filter(Boolean)
+      .join(', ');
 
-    const formattedDate = formatDateToHuman(form.selectedDate);
-    const formattedTime = formatTimeToHuman(form.selectedTime);
-    const meetingMode = form.meetingType === 'online' ? 'Online' : 'Presencial';
-    const revenueLabel = revenueRanges.find(r => r.id === form.monthlyRevenueRange)?.name || 'Não informado';
-    const locationInfo = form.meetingType === 'online'
-      ? `Plataforma preferida: ${form.platform}`
-      : `Endereço: ${form.address || 'a definir'}`;
+    return `*Nova Solicitação de Agendamento*
+Lead ID: ${leadId}
 
-    return `*Lead A2 Data – ${leadId}*
-
-👤 *Contato*
-• ${form.contactName}
-• ${form.contactPhone}
-• ${form.contactEmail}
-
-🏢 *Sobre a empresa*
-• ${form.company}
+*Dados da Empresa:*
+• Empresa: ${form.company}
 • Ramo: ${industries.find(i => i.id === form.industry)?.name || form.industry}
-• Equipe: ${employeeRanges.find(e => e.id === form.employees)?.name || form.employees}
-• Receita mensal: ${revenueLabel}
+• Funcionários: ${employeeRanges.find(e => e.id === form.employees)?.name || form.employees}
+• Receita Mensal: ${revenueRanges.find(r => r.id === form.monthlyRevenueRange)?.name || 'Não informado'}
 
-🎯 *Demandas*
-• Desafio: ${problems.find(p => p.id === form.mainProblem)?.name || form.mainProblem}
-• Serviços desejados: ${selectedServiceNames.length ? selectedServiceNames.join(', ') : 'Não informado'}
+*Contato:*
+• Nome: ${form.contactName}
+• Telefone: ${form.contactPhone}
+• Email: ${form.contactEmail}
 
-📅 *Agendamento*
-• Data: ${formattedDate}
-• Horário: ${formattedTime}
-• Formato: ${meetingMode}
-• ${locationInfo}
+*Necessidades:*
+• Problema Principal: ${problems.find(p => p.id === form.mainProblem)?.name || form.mainProblem}
+• Serviços de Interesse: ${selectedServiceNames}
 
-${form.notes ? `📝 *Observações*
-${form.notes}
+*Agendamento:*
+• Data: ${form.selectedDate}
+• Horário: ${form.selectedTime}
+• Tipo: ${form.meetingType === 'online' ? 'Online' : 'Presencial'}
+${form.meetingType === 'online' ? `• Plataforma: ${form.platform}` : `• Endereço: ${form.address}`}
 
-` : ''}Vamos guiá-lo pelo próximo passo?`;
+${form.notes ? `*Observações:*\n${form.notes}` : ''}`;
   };
 
   const sendWhatsApp = () => {
     const message = buildWhatsAppMessage();
-    const phone = '5583989060130';
+    const phone = '5583999999999'; // Replace with actual WhatsApp number
     const encodedMessage = encodeURIComponent(message);
     const baseUrl = isMobile() 
       ? 'https://api.whatsapp.com/send'
@@ -450,100 +441,83 @@ const StepNav = ({ steps, currentStep, onStepClick }) => {
 
     return (
       <div className="scheduler">
-        <div className="scheduler-grid">
-          <div className="scheduler-column">
-            <div className="meeting-type-selector">
-              <h4>Tipo de reunião</h4>
-              <div className="meeting-type-options">
-                <button
-                  className={`meeting-type-option ${form.meetingType === 'online' ? 'selected' : ''}`}
-                  onClick={() => updateForm({ meetingType: 'online', address: '' })}
-                >
-                  <Video size={20} />
-                  <span>Online</span>
-                </button>
-                <button
-                  className={`meeting-type-option ${form.meetingType === 'presencial' ? 'selected' : ''}`}
-                  onClick={() => updateForm({ meetingType: 'presencial', platform: '' })}
-                >
-                  <MapPin size={20} />
-                  <span>Presencial</span>
-                </button>
-              </div>
-            </div>
-
-            <div className="calendar-section">
-              <h4>Selecione a data</h4>
-              <ModernCalendar
-                selectedDate={form.selectedDate}
-                onDateSelect={(date) => updateForm({ selectedDate: date, selectedTime: '' })}
-                meetingType={form.meetingType}
-              />
-              {errors.selectedDate && <div className="error-message">{errors.selectedDate}</div>}
-            </div>
-          </div>
-
-          <div className="scheduler-column">
-            {form.selectedDate ? (
-              <div className="time-slots-section">
-                <h4>Horários disponíveis</h4>
-                <div className="time-slots">
-                  {availableSlots.map(slot => (
-                    <button
-                      key={slot}
-                      className={`time-slot ${form.selectedTime === slot ? 'selected' : ''}`}
-                      onClick={() => updateForm({ selectedTime: slot })}
-                    >
-                      <Clock size={16} />
-                      {slot}
-                    </button>
-                  ))}
-                </div>
-                {errors.selectedTime && <div className="error-message">{errors.selectedTime}</div>}
-              </div>
-            ) : (
-              <div className="scheduler-placeholder">
-                <p>Escolha uma data para desbloquear os horários disponíveis.</p>
-              </div>
-            )}
-
-            {form.meetingType === 'presencial' && (
-              <div className="address-section">
-                <label htmlFor="address">Endereço da reunião *</label>
-                <textarea
-                  id="address"
-                  value={form.address}
-                  onChange={(e) => updateForm({ address: e.target.value })}
-                  placeholder="Digite o endereço completo onde a reunião será realizada"
-                  aria-invalid={errors.address ? 'true' : 'false'}
-                />
-                {errors.address && <div className="error-message">{errors.address}</div>}
-              </div>
-            )}
-
-            {form.meetingType === 'online' && (
-              <div className="platform-section">
-                <label htmlFor="platform">Plataforma preferida</label>
-                <select
-                  id="platform"
-                  value={form.platform}
-                  onChange={(e) => updateForm({ platform: e.target.value })}
-                >
-                  <option value="meet">Google Meet</option>
-                  <option value="zoom">Zoom</option>
-                  <option value="teams">Microsoft Teams</option>
-                </select>
-              </div>
-            )}
-
-            <div className="scheduler-summary">
-              <h5>Resumo rápido</h5>
-              <p><span>Data</span><strong>{formatDateToHuman(form.selectedDate)}</strong></p>
-              <p><span>Horário</span><strong>{formatTimeToHuman(form.selectedTime)}</strong></p>
-              <p><span>Formato</span><strong>{form.meetingType === 'online' ? 'Online' : 'Presencial'}</strong></p>
-            </div>
+        <div className="meeting-type-selector">
+          <h4>Tipo de Reunião</h4>
+          <div className="meeting-type-options">
+            <button
+              className={`meeting-type-option ${form.meetingType === 'online' ? 'selected' : ''}`}
+              onClick={() => updateForm({ meetingType: 'online', address: '' })}
+            >
+              <Video size={20} />
+              <span>Online</span>
+            </button>
+            <button
+              className={`meeting-type-option ${form.meetingType === 'presencial' ? 'selected' : ''}`}
+              onClick={() => updateForm({ meetingType: 'presencial', platform: '' })}
+            >
+              <MapPin size={20} />
+              <span>Presencial</span>
+            </button>
           </div>
         </div>
+
+        <div className="calendar-section">
+          <h4>Selecione a Data</h4>
+          <ModernCalendar
+            selectedDate={form.selectedDate}
+            onDateSelect={(date) => updateForm({ selectedDate: date, selectedTime: '' })}
+            meetingType={form.meetingType}
+          />
+          {errors.selectedDate && <div className="error-message">{errors.selectedDate}</div>}
+        </div>
+
+        {form.selectedDate && (
+          <div className="time-slots-section">
+            <h4>Horários Disponíveis</h4>
+            <div className="time-slots">
+              {availableSlots.map(slot => (
+                <button
+                  key={slot}
+                  className={`time-slot ${form.selectedTime === slot ? 'selected' : ''}`}
+                  onClick={() => updateForm({ selectedTime: slot })}
+                >
+                  <Clock size={16} />
+                  {slot}
+                </button>
+              ))}
+            </div>
+            {errors.selectedTime && <div className="error-message">{errors.selectedTime}</div>}
+          </div>
+        )}
+
+        {form.meetingType === 'presencial' && (
+          <div className="address-section">
+            <label htmlFor="address">Endereço da Reunião *</label>
+            <textarea
+              id="address"
+              value={form.address}
+              onChange={(e) => updateForm({ address: e.target.value })}
+              placeholder="Digite o endereço completo onde a reunião será realizada"
+              aria-invalid={errors.address ? 'true' : 'false'}
+            />
+            {errors.address && <div className="error-message">{errors.address}</div>}
+          </div>
+        )}
+
+        {form.meetingType === 'online' && (
+          <div className="platform-section">
+            <label htmlFor="platform">Plataforma Preferida</label>
+            <select
+              id="platform"
+              value={form.platform}
+              onChange={(e) => updateForm({ platform: e.target.value })}
+            >
+              <option value="meet">Google Meet</option>
+              <option value="zoom">Zoom</option>
+              <option value="teams">Microsoft Teams</option>
+            </select>
+          </div>
+        )}
       </div>
     );
   };
@@ -556,74 +530,69 @@ const StepNav = ({ steps, currentStep, onStepClick }) => {
 
     return (
       <div className="summary">
-        <div className="summary-grid">
-          <section className="summary-card">
-            <div className="summary-header">
-              <h4>Perfil da empresa</h4>
-              <button onClick={() => onEdit(0)} className="edit-button">Editar</button>
-            </div>
-            <div className="summary-content">
-              <p><span>Empresa</span><strong>{form.company || 'Não informado'}</strong></p>
-              <p><span>Ramo</span><strong>{industries.find(i => i.id === form.industry)?.name || 'Não informado'}</strong></p>
-              <p><span>Equipe</span><strong>{employeeRanges.find(e => e.id === form.employees)?.name || 'Não informado'}</strong></p>
-              <p><span>Problema principal</span><strong>{problems.find(p => p.id === form.mainProblem)?.name || 'Não informado'}</strong></p>
-            </div>
-          </section>
+        <div className="summary-section">
+          <div className="summary-header">
+            <h4>Dados da Empresa</h4>
+            <button onClick={() => onEdit(0)} className="edit-button">Editar</button>
+          </div>
+          <div className="summary-content">
+            <p><strong>Empresa:</strong> {form.company}</p>
+            <p><strong>Ramo:</strong> {industries.find(i => i.id === form.industry)?.name}</p>
+            <p><strong>Funcionários:</strong> {employeeRanges.find(e => e.id === form.employees)?.name}</p>
+            <p><strong>Problema Principal:</strong> {problems.find(p => p.id === form.mainProblem)?.name}</p>
+          </div>
+        </div>
 
-          <section className="summary-card">
-            <div className="summary-header">
-              <h4>Contato</h4>
-              <button onClick={() => onEdit(4)} className="edit-button">Editar</button>
-            </div>
-            <div className="summary-content">
-              <p><span>Nome</span><strong>{form.contactName}</strong></p>
-              <p><span>Telefone</span><strong>{form.contactPhone}</strong></p>
-              <p><span>Email</span><strong>{form.contactEmail}</strong></p>
-              <p><span>Receita mensal</span><strong>{revenueRanges.find(r => r.id === form.monthlyRevenueRange)?.name || 'Não informado'}</strong></p>
-            </div>
-          </section>
+        <div className="summary-section">
+          <div className="summary-header">
+            <h4>Serviços de Interesse</h4>
+            <button onClick={() => onEdit(3)} className="edit-button">Editar</button>
+          </div>
+          <div className="summary-content">
+            <ul>
+              {selectedServiceNames.map(name => <li key={name}>{name}</li>)}
+            </ul>
+          </div>
+        </div>
 
-          <section className="summary-card">
-            <div className="summary-header">
-              <h4>Serviços de interesse</h4>
-              <button onClick={() => onEdit(3)} className="edit-button">Editar</button>
-            </div>
-            <div className="summary-content">
-              <div className="summary-chips">
-                {selectedServiceNames.length ? (
-                  selectedServiceNames.map(name => <span key={name}>{name}</span>)
-                ) : (
-                  <span className="empty-chip">Nenhum serviço selecionado</span>
-                )}
-              </div>
-            </div>
-          </section>
+        <div className="summary-section">
+          <div className="summary-header">
+            <h4>Contato</h4>
+            <button onClick={() => onEdit(4)} className="edit-button">Editar</button>
+          </div>
+          <div className="summary-content">
+            <p><strong>Nome:</strong> {form.contactName}</p>
+            <p><strong>Telefone:</strong> {form.contactPhone}</p>
+            <p><strong>Email:</strong> {form.contactEmail}</p>
+          </div>
+        </div>
 
-          <section className="summary-card">
-            <div className="summary-header">
-              <h4>Agendamento</h4>
-              <button onClick={() => onEdit(5)} className="edit-button">Editar</button>
-            </div>
-            <div className="summary-content">
-              <p><span>Data</span><strong>{formatDateToHuman(form.selectedDate)}</strong></p>
-              <p><span>Horário</span><strong>{formatTimeToHuman(form.selectedTime)}</strong></p>
-              <p><span>Formato</span><strong>{form.meetingType === 'online' ? 'Online' : 'Presencial'}</strong></p>
-              {form.meetingType === 'online' ? (
-                <p><span>Plataforma</span><strong>{form.platform}</strong></p>
-              ) : (
-                <p><span>Endereço</span><strong>{form.address || 'A definir'}</strong></p>
-              )}
-            </div>
-          </section>
+        <div className="summary-section">
+          <div className="summary-header">
+            <h4>Agendamento</h4>
+            <button onClick={() => onEdit(5)} className="edit-button">Editar</button>
+          </div>
+          <div className="summary-content">
+            <p><strong>Data:</strong> {form.selectedDate}</p>
+            <p><strong>Horário:</strong> {form.selectedTime}</p>
+            <p><strong>Tipo:</strong> {form.meetingType === 'online' ? 'Online' : 'Presencial'}</p>
+            {form.meetingType === 'online' ? (
+              <p><strong>Plataforma:</strong> {form.platform}</p>
+            ) : (
+              <p><strong>Endereço:</strong> {form.address}</p>
+            )}
+          </div>
         </div>
 
         {form.notes && (
-          <div className="summary-notes">
-            <div className="summary-notes-header">
-              <h4>Observações adicionais</h4>
+          <div className="summary-section">
+            <div className="summary-header">
+              <h4>Observações</h4>
               <button onClick={() => onEdit(4)} className="edit-button">Editar</button>
             </div>
-            <p>{form.notes}</p>
+            <div className="summary-content">
+              <p>{form.notes}</p>
+            </div>
           </div>
         )}
       </div>
