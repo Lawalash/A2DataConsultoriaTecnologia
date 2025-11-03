@@ -230,6 +230,7 @@ const PlanCard = React.memo(({ plan, index, billingCycle }) => {
       className={cardClasses}
       style={{ animationDelay: `${index * 0.2}s` }}
     >
+      <div className="plan-card-surface" aria-hidden="true"></div>
       {plan.isCustom && (
         <div className="custom-background-animation">
           <div className="floating-particles">
@@ -242,43 +243,46 @@ const PlanCard = React.memo(({ plan, index, billingCycle }) => {
           </div>
         </div>
       )}
+      <div className="plan-card-inner">
+        {plan.popular && (
+          <div className="plan-popular-tag">
+            <Crown size={16} />
+            <span>Mais Popular</span>
+          </div>
+        )}
 
-      {plan.popular && (
-        <div className="plan-popular-tag">
-          <Crown size={16} />
-          <span>Mais Popular</span>
+        <div className="plan-header">
+          <div className="plan-icon-wrapper">
+            <Icon size={32} />
+            <div className="icon-glow"></div>
+          </div>
+          <div className="plan-title-group">
+            <h3>{plan.name}</h3>
+            <span className="plan-badge">{plan.badge}</span>
+          </div>
         </div>
-      )}
 
-      <div className="plan-header">
-        <div className="plan-icon-wrapper">
-          <Icon size={32} />
-          <div className="icon-glow"></div>
+        <PlanStats plan={plan} />
+
+        <div className="plan-price">
+          <PriceDisplay plan={plan} billingCycle={billingCycle} />
         </div>
-        <h3>{plan.name}</h3>
-        <span className="plan-badge">{plan.badge}</span>
+
+        <div className="plan-features">
+          {plan.isCustom && <p className="plan-custom-description">{plan.description}</p>}
+          <ul>
+            {plan.features.map((f, i) => <FeatureItem key={i} feature={f} index={i} />)}
+          </ul>
+        </div>
+
+        <button
+          className={`plan-button ${plan.isCustom ? 'contact-button' : 'subscribe-button'} ${plan.popular ? 'popular-button' : ''}`}
+        >
+          <span>{plan.ctaText}</span>
+          {!plan.isCustom && <Zap size={18} className="button-icon" />}
+          <div className="button-shine"></div>
+        </button>
       </div>
-
-      <PlanStats plan={plan} />
-
-      <div className="plan-price">
-        <PriceDisplay plan={plan} billingCycle={billingCycle} />
-      </div>
-
-      <div className="plan-features">
-        {plan.isCustom && <p className="plan-custom-description">{plan.description}</p>}
-        <ul>
-          {plan.features.map((f, i) => <FeatureItem key={i} feature={f} index={i} />)}
-        </ul>
-      </div>
-
-      <button
-        className={`plan-button ${plan.isCustom ? 'contact-button' : 'subscribe-button'} ${plan.popular ? 'popular-button' : ''}`}
-      >
-        <span>{plan.ctaText}</span>
-        {!plan.isCustom && <Zap size={18} className="button-icon" />}
-        <div className="button-shine"></div>
-      </button>
     </div>
   );
 });

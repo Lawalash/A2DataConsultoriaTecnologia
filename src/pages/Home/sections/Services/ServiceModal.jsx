@@ -6,6 +6,11 @@ import './ServiceModal.css';
 export default function ServiceModal({ isOpen, onClose, serviceData }) {
   const modalRef = useRef(null);
   const previousFocusRef = useRef(null);
+  const summaryHighlight = serviceData?.description
+    ? `${serviceData.description.slice(0, 160)}${serviceData.description.length > 160 ? '…' : ''}`
+    : '';
+  const featuredBenefits = serviceData?.benefits?.slice(0, 3) ?? [];
+  const galleryImages = serviceData?.images ?? [];
 
   // Trap focus & scroll
   useEffect(() => {
@@ -77,43 +82,65 @@ export default function ServiceModal({ isOpen, onClose, serviceData }) {
           </button>
         </div>
 
+        <div className="service-modal-overview">
+          <div className="service-modal-icon-pill" aria-hidden="true">
+            {serviceData.icon}
+          </div>
+          <div className="service-modal-overview-text">
+            {summaryHighlight && (
+              <p className="service-modal-lead">{summaryHighlight}</p>
+            )}
+            {featuredBenefits.length > 0 && (
+              <div className="service-modal-chips" role="list">
+                {featuredBenefits.map((benefit, index) => (
+                  <span key={index} role="listitem" className="service-modal-chip">
+                    {benefit}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
         {/* CONTENT GRID */}
-        <div className="service-modal-content">
+        <div className={`service-modal-content ${galleryImages.length === 0 ? 'no-gallery' : ''}`}>
 
           {/* CARROSSEL (APENAS INDICADORES) */}
-          <div className="service-modal-carousel">
-            <Carousel
-              showThumbs={false}
-              showStatus={false}
-              showArrows={false}
-              infiniteLoop
-              swipeable
-              emulateTouch
-              renderIndicator={(onClick, isSelected, idx, label) => (
-                <button
-                  type="button"
-                  onClick={onClick}
-                  className={`carousel-indicator ${isSelected ? 'selected' : ''}`}
-                  aria-label={`${label || 'Ir para imagem'} ${idx + 1}`}
-                  key={idx}
-                />
-              )}
-            >
-              {serviceData.images.map((img, i) => (
-                <div key={i} className="carousel-slide">
-                  <img
-                    src={img.src}
-                    alt={img.alt}
-                    loading="lazy"
-                    className="carousel-image"
+          {galleryImages.length > 0 && (
+            <div className="service-modal-carousel">
+              <Carousel
+                showThumbs={false}
+                showStatus={false}
+                showArrows={false}
+                infiniteLoop
+                swipeable
+                emulateTouch
+                renderIndicator={(onClick, isSelected, idx, label) => (
+                  <button
+                    type="button"
+                    onClick={onClick}
+                    className={`carousel-indicator ${isSelected ? 'selected' : ''}`}
+                    aria-label={`${label || 'Ir para imagem'} ${idx + 1}`}
+                    key={idx}
                   />
-                  {img.caption && (
-                    <p className="carousel-caption">{img.caption}</p>
-                  )}
-                </div>
-              ))}
-            </Carousel>
-          </div>
+                )}
+              >
+                {galleryImages.map((img, i) => (
+                  <div key={i} className="carousel-slide">
+                    <img
+                      src={img.src}
+                      alt={img.alt}
+                      loading="lazy"
+                      className="carousel-image"
+                    />
+                    {img.caption && (
+                      <p className="carousel-caption">{img.caption}</p>
+                    )}
+                  </div>
+                ))}
+              </Carousel>
+            </div>
+          )}
 
           {/* INFORMAÇÕES E BENEFÍCIOS */}
           <div className="service-modal-info">
@@ -132,7 +159,7 @@ export default function ServiceModal({ isOpen, onClose, serviceData }) {
         </div>
 
         {/* TECNOLOGIAS ABAIXO */}
-        {serviceData.technologies && (
+        {serviceData?.technologies && (
           <div className="service-modal-tech">
             <h3>Tecnologias:</h3>
             <div className="tech-tags">
