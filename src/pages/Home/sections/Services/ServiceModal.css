@@ -2,10 +2,10 @@
 
 :root {
   --modal-z-index: 9999;
-  --backdrop-color: rgba(4, 57, 89, 0.65);
-  --modal-bg: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+  --backdrop-color: rgba(0, 0, 0, 0.75);
+  --modal-bg: #fff;
   --modal-radius: 20px;
-  --modal-shadow: 0 35px 65px rgba(4, 57, 89, 0.25);
+  --modal-shadow: 0 25px 50px rgba(0,0,0,0.25);
   --smooth: all 0.3s cubic-bezier(0.4,0,0.2,1);
   --azul-escuro: #052f45;
   --azul-medio: #0a5685;
@@ -42,13 +42,12 @@
 
 /* HEADER */
 .service-modal-header {
-  display: flex;
+  display: flex; 
   justify-content: center; /* Centraliza o conteúdo */
   align-items: center;
   padding: 25px 30px;
-  border-bottom: 1px solid rgba(5, 47, 69, 0.08);
-  background: radial-gradient(circle at 20% 20%, rgba(77, 181, 255, 0.22), transparent 55%),
-    linear-gradient(135deg, rgba(5, 47, 69, 0.08) 0%, rgba(248, 250, 252, 0.95) 100%);
+  border-bottom: 1px solid #e5e7eb;
+  background: linear-gradient(135deg, var(--azul-claro) 0%, #f8fafc 100%);
   min-height: 80px;
   position: relative; /* Para posicionar o botão de fechar */
 }
@@ -102,75 +101,12 @@
   transform: translateY(-50%) scale(1.1); /* Mantém a centralização no hover */
 }
 
-.service-modal-overview {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  padding: 24px 32px 20px;
-  background: rgba(5, 47, 69, 0.04);
-  border-bottom: 1px solid rgba(5, 47, 69, 0.08);
-}
-
-.service-modal-icon-pill {
-  width: 64px;
-  height: 64px;
-  border-radius: 20px;
-  display: grid;
-  place-items: center;
-  font-size: 2rem;
-  color: var(--azul-escuro);
-  background: linear-gradient(135deg, rgba(77, 181, 255, 0.25), rgba(10, 86, 133, 0.12));
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 10px 25px rgba(10, 86, 133, 0.15);
-}
-
-.service-modal-overview-text {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.service-modal-lead {
-  margin: 0;
-  font-size: 1rem;
-  line-height: 1.6;
-  color: rgba(5, 47, 69, 0.85);
-  max-width: 520px;
-}
-
-.service-modal-chips {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.service-modal-chip {
-  display: inline-flex;
-  align-items: center;
-  padding: 8px 14px;
-  border-radius: 999px;
-  background: rgba(10, 86, 133, 0.08);
-  color: var(--azul-escuro);
-  font-size: 0.85rem;
-  font-weight: 500;
-  border: 1px solid rgba(10, 86, 133, 0.12);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.service-modal-chip:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(10, 86, 133, 0.12);
-}
-
 /* GRID CONTENT */
 .service-modal-content {
   flex: 1; display: grid;
   grid-template-columns: 1fr 1fr;
   overflow: hidden;
   min-height: 0;
-}
-
-.service-modal-content.no-gallery {
-  grid-template-columns: minmax(0, 1fr);
 }
 
 /* CARROSSEL - OCULTAR SETAS */
@@ -247,7 +183,7 @@
 
 /* INFO & BENEFITS */
 .service-modal-info {
-  padding: 30px;
+  padding: 30px; 
   overflow-y: auto;
   min-width: 0; /* Permite quebra de linha */
 }
@@ -255,47 +191,35 @@
 .service-modal-description {
   word-wrap: break-word;
   overflow-wrap: break-word;
-  background: rgba(5, 47, 69, 0.04);
-  border-radius: 16px;
-  padding: 18px 20px;
 }
 
 .service-modal-description p {
-  font-size: 1rem; line-height: 1.6; color: rgba(5, 47, 69, 0.85);
+  font-size: 1rem; line-height: 1.6; color: #374151;
   margin: 0 0 20px 0;
 }
 
 .service-modal-benefits {
-  margin-top: 24px;
+  margin-top: 20px;
 }
 
 .service-modal-benefits h3 {
-  font-size: 1.1rem; font-weight: 600; color: var(--azul-escuro);
-  margin-bottom: 14px;
+  font-size: 1.2rem; font-weight: 600; color: var(--azul-escuro);
+  margin-bottom: 12px;
 }
 
 .service-modal-benefits ul {
-  list-style: none; padding: 0; display: grid; gap: 10px;
+  list-style: none; padding: 0;
 }
 
 .service-modal-benefits ul li {
-  position: relative; padding: 12px 16px 12px 42px;
-  border-radius: 14px;
-  background: rgba(10, 86, 133, 0.06);
-  border: 1px solid rgba(10, 86, 133, 0.12);
-  color: rgba(5, 47, 69, 0.9);
-  font-size: 0.95rem;
+  position: relative; padding-left: 20px; margin-bottom: 8px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .service-modal-benefits ul li::before {
-  content: '✓';
-  position: absolute;
-  left: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--azul-medio);
-  font-weight: 700;
-  font-size: 1rem;
+  content: '✓'; position: absolute; left: 0;
+  color: var(--azul-medio); font-weight: bold;
 }
 
 /* TECNOLOGIAS abaixo */
@@ -354,9 +278,9 @@
 
 /* FOOTER */
 .service-modal-footer {
-  display: flex; justify-content: space-between; gap: 12px;
-  padding: 24px 30px; border-top: 1px solid rgba(5, 47, 69, 0.08);
-  background: rgba(248, 250, 252, 0.9);
+  display: flex; justify-content: flex-end; gap: 12px;
+  padding: 25px 30px; border-top: 1px solid #e5e7eb;
+  background: #f8fafc;
 }
 
 .service-modal-cta,
@@ -369,7 +293,6 @@
 
 .service-modal-cta {
   background: var(--azul-medio); color: #fff; border: none;
-  box-shadow: 0 10px 25px rgba(10, 86, 133, 0.3);
 }
 .service-modal-cta:hover {
   background: var(--azul-escuro);
@@ -388,80 +311,50 @@
 @media (max-width: 768px) {
   .service-modal-backdrop {
     padding: 10px;
-    align-items: flex-end;
   }
-
-  .service-modal-container {
-    border-radius: 26px 26px 0 0;
-    max-height: 95vh;
+  
+  .service-modal-content { 
+    grid-template-columns: 1fr; 
   }
-
-  .service-modal-overview {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 18px;
-    padding: 22px 24px;
+  
+  .service-modal-carousel { 
+    order: -1; 
   }
-
-  .service-modal-icon-pill {
-    width: 56px;
-    height: 56px;
-    font-size: 1.6rem;
+  
+  .carousel-image { 
+    height: 250px; 
   }
-
-  .service-modal-chips {
-    gap: 10px;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    width: 100%;
-    padding-bottom: 4px;
-  }
-
-  .service-modal-chip {
-    white-space: nowrap;
-    background: rgba(10, 86, 133, 0.12);
-  }
-
-  .service-modal-content {
-    grid-template-columns: 1fr;
-  }
-
-  .service-modal-carousel {
-    order: -1;
-  }
-
-  .carousel-image {
-    height: 240px;
-  }
-
+  
   .service-modal-header {
     padding: 20px 20px;
     min-height: 70px;
   }
-
+  
   .service-modal-title {
     font-size: 1.5rem;
     gap: 8px;
   }
-
+  
+  .service-modal-icon {
+    font-size: 1.4rem;
+  }
+  
   .service-modal-info {
-    padding: 22px 20px 26px;
+    padding: 20px;
   }
-
+  
   .service-modal-tech {
-    padding: 18px 22px;
+    padding: 15px 20px;
   }
-
-  .service-modal-footer {
-    flex-direction: column;
-    align-items: stretch;
-    padding: 20px 22px 26px;
-    gap: 10px;
+  
+  .service-modal-footer { 
+    flex-direction: column; 
+    padding: 20px;
   }
-
+  
   .service-modal-cta,
-  .service-modal-secondary {
-    width: 100%;
+  .service-modal-secondary { 
+    width: 100%; 
     white-space: normal;
   }
 }
@@ -470,42 +363,34 @@
   .service-modal-backdrop {
     padding: 5px;
   }
-
-  .carousel-image {
-    height: 200px;
+  
+  .carousel-image { 
+    height: 200px; 
   }
-
+  
   .service-modal-header {
     padding: 15px 15px;
     min-height: 60px;
   }
-
-  .service-modal-title {
-    font-size: 1.3rem;
+  
+  .service-modal-title { 
+    font-size: 1.3rem; 
     gap: 6px;
   }
-
+  
   .service-modal-icon {
     font-size: 1.2rem;
   }
-
-  .service-modal-overview {
-    padding: 20px 18px;
-    gap: 16px;
-  }
-
+  
   .service-modal-info,
-  .service-modal-tech {
-    padding: 18px;
+  .service-modal-tech,
+  .service-modal-footer { 
+    padding: 15px; 
   }
-
-  .service-modal-footer {
-    padding: 18px;
-  }
-
-  .tech-tag {
-    padding: 4px 8px;
-    font-size: 0.8rem;
+  
+  .tech-tag { 
+    padding: 4px 8px; 
+    font-size: 0.8rem; 
   }
   
   

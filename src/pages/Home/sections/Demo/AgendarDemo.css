@@ -464,35 +464,8 @@ body.cz-shortcut-listen * {
    Scheduler Components
    =============================== */
 .scheduler {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xl);
-  background: var(--bg-color);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-xl);
-  box-shadow: var(--shadow-sm);
-}
-
-.scheduler-grid {
   display: grid;
   gap: var(--spacing-xl);
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-}
-
-.scheduler-column {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xl);
-}
-
-.scheduler-placeholder {
-  background: var(--bg-secondary);
-  border: 1px dashed var(--border-color);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-lg);
-  color: var(--text-muted);
-  text-align: center;
 }
 
 .meeting-type-selector h4,
@@ -503,7 +476,7 @@ body.cz-shortcut-listen * {
   font-size: var(--font-lg);
   font-weight: 600;
   margin-bottom: var(--spacing-md);
-  color: var(--text-primary);
+  color: var(--bg-color);
 }
 
 .meeting-type-options {
@@ -518,8 +491,8 @@ body.cz-shortcut-listen * {
   justify-content: center;
   gap: var(--spacing-sm);
   padding: var(--spacing-lg);
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
+  background: var(--bg-color);
+  border: 2px solid var(--border-color);
   border-radius: var(--radius-lg);
   font-size: var(--font-base);
   font-weight: 500;
@@ -535,41 +508,11 @@ body.cz-shortcut-listen * {
 }
 
 .meeting-type-option.selected {
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.12), rgba(37, 99, 235, 0.25));
-  border-color: rgba(37, 99, 235, 0.45);
-  color: var(--primary-color);
-  box-shadow: var(--shadow-md);
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+  border-color: var(--primary-color);
+  color: white;
+  box-shadow: var(--shadow-lg);
   transform: translateY(-1px);
-}
-
-.scheduler-summary {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-lg);
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
-  box-shadow: var(--shadow-sm);
-}
-
-.scheduler-summary h5 {
-  font-size: var(--font-base);
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: var(--spacing-sm);
-}
-
-.scheduler-summary p {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: var(--font-sm);
-  color: var(--text-secondary);
-}
-
-.scheduler-summary span {
-  color: var(--text-muted);
 }
 
 /* Modern Calendar */
@@ -691,8 +634,8 @@ body.cz-shortcut-listen * {
   justify-content: center;
   gap: var(--spacing-xs);
   padding: var(--spacing-md);
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
+  background: var(--bg-color);
+  border: 2px solid var(--border-color);
   border-radius: var(--radius-md);
   font-size: var(--font-sm);
   font-weight: 500;
@@ -708,10 +651,10 @@ body.cz-shortcut-listen * {
 }
 
 .time-slot.selected {
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(37, 99, 235, 0.3));
-  border-color: rgba(37, 99, 235, 0.45);
-  color: var(--primary-color);
-  box-shadow: var(--shadow-sm);
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+  border-color: var(--primary-color);
+  color: white;
+  box-shadow: var(--shadow-lg);
   transform: translateY(-1px);
 }
 
@@ -744,20 +687,12 @@ body.cz-shortcut-listen * {
 /* ===============================
    Summary Component
    =============================== */
-
 .summary {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xl);
-}
-
-.summary-grid {
   display: grid;
   gap: var(--spacing-lg);
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 
-.summary-card {
+.summary-section {
   background: var(--bg-color);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
@@ -766,7 +701,7 @@ body.cz-shortcut-listen * {
   transition: box-shadow 0.2s ease;
 }
 
-.summary-card:hover {
+.summary-section:hover {
   box-shadow: var(--shadow-md);
 }
 
@@ -801,60 +736,26 @@ body.cz-shortcut-listen * {
 }
 
 .summary-content p {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   margin-bottom: var(--spacing-sm);
-  font-size: var(--font-sm);
-  color: var(--text-secondary);
-}
-
-.summary-content p span {
-  color: var(--text-muted);
-}
-
-.summary-content p strong {
-  color: var(--text-primary);
-  text-align: right;
-}
-
-.summary-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-sm);
-}
-
-.summary-chips span {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: 999px;
-  padding: var(--spacing-xs) var(--spacing-md);
-  font-size: var(--font-sm);
-  color: var(--text-secondary);
-}
-
-.summary-chips .empty-chip {
-  opacity: 0.7;
-}
-
-.summary-notes {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-xl);
-  box-shadow: var(--shadow-sm);
-}
-
-.summary-notes-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--spacing-sm);
-}
-
-.summary-notes p {
-  color: var(--text-secondary);
   line-height: 1.6;
+}
+
+.summary-content strong {
+  color: var(--text-primary);
+}
+
+.summary-content ul {
+  list-style: none;
+  padding: 0;
+}
+
+.summary-content li {
+  padding: var(--spacing-xs) 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.summary-content li:last-child {
+  border-bottom: none;
 }
 
 /* ===============================
@@ -1227,7 +1128,7 @@ body.cz-shortcut-listen * {
   }
 
   /* Summary mobile */
-  .summary-card {
+  .summary-section {
     padding: var(--spacing-md);
   }
 
@@ -1315,7 +1216,7 @@ body.cz-shortcut-listen * {
     font-size: 16px;
   }
 
-  .summary-card {
+  .summary-section {
     padding: var(--spacing-sm);
   }
 
@@ -1438,7 +1339,7 @@ body.cz-shortcut-listen * {
   }
 
   .modern-calendar,
-  .summary-card,
+  .summary-section,
   .service-card,
   .option-button {
     background: var(--bg-secondary);
