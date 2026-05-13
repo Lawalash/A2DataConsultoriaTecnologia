@@ -1,27 +1,42 @@
-// src/pages/Home/Home.jsx
 import React, { useEffect } from 'react';
-import Hero from './sections/Hero/Hero';
-import About from './sections/About/About';
-import Services from './sections/Services/Services';
-import Plans from './sections/Plans/Plans';
-import Footer from './sections/Footer/Footer';
+import HeroSection from '../../components/sections/HeroSection';
+import SolutionsSection from '../../components/sections/SolutionsSection';
+import HowItWorksSection from '../../components/sections/HowItWorksSection';
+import CasesSection from '../../components/sections/CasesSection';
+import WhyChooseUsSection from '../../components/sections/WhyChooseUsSection';
+import FounderSection from '../../components/sections/FounderSection';
+import FaqSection from '../../components/sections/FaqSection';
+import ContactSection from '../../components/sections/ContactSection';
+import FooterNew from '../../components/sections/FooterNew';
 
 const Home = () => {
   useEffect(() => {
     const { hash } = window.location;
     if (hash) {
-      const el = document.getElementById(hash.substring(1));
-      if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 100);
+      setTimeout(() => {
+        const el = document.getElementById(hash.substring(1));
+        if (el) {
+          const offset = 80;
+          const top = el.offsetTop - offset;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+      }, 200);
+    } else {
+      window.scrollTo(0, 0);
     }
   }, []);
 
   return (
     <>
-      <Hero />
-      <About />
-      <Services />
-      <Plans />
-      <Footer /> 
+      <HeroSection />
+      <SolutionsSection />
+      <HowItWorksSection />
+      <CasesSection />
+      <WhyChooseUsSection />
+      <FounderSection />
+      <FaqSection />
+      <ContactSection />
+      <FooterNew />
     </>
   );
 };

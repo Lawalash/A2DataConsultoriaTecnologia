@@ -1,0 +1,122 @@
+.case-404 {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.cp-hero {
+  position: relative;
+  padding: 140px 0 80px;
+  overflow: hidden;
+}
+
+.cp-hero__bg {
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-hero);
+}
+
+.cp-hero__content {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+}
+
+.cp-hero__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  transition: color var(--transition-fast);
+}
+
+.cp-hero__back:hover { color: var(--accent-light); }
+
+.cp-hero__title {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 16px 0;
+}
+
+.cp-hero__description {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.cp-section {
+  padding: 80px 0;
+}
+
+.cp-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 60px;
+}
+
+.cp-features {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.cp-feature {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+}
+
+.cp-feature__icon { color: var(--success); flex-shrink: 0; }
+
+.cp-techs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+  margin-bottom: 32px;
+}
+
+.cp-tech {
+  padding: 10px 18px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent-light);
+}
+
+.cp-tech:hover { transform: none; }
+
+.cp-related {
+  padding: 24px;
+  margin-top: 16px;
+}
+
+.cp-related:hover { transform: none; }
+
+.cp-related h3 {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.cp-related p {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+@media (max-width: 768px) {
+  .cp-grid { grid-template-columns: 1fr; gap: 40px; }
+}

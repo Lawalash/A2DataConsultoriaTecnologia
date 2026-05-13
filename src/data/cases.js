@@ -1,0 +1,60 @@
+// src/data/cases.js
+// Dados centralizados dos cases A2 Data
+
+const cases = [
+  {
+    id: 'studio-barboza-nails',
+    slug: 'studio-barboza-nails',
+    name: 'Studio Barboza Nails',
+    segment: 'Nail Design',
+    shortDescription: 'Plataforma completa para gestão e presença digital de um estúdio de nail design, com agendamento, portfólio e painel administrativo.',
+    description: 'O Studio Barboza Nails é um projeto desenvolvido para a nail designer Vitória Barboza. A solução inclui uma página profissional de apresentação com catálogo de serviços, portfólio visual, agendamento online e um painel administrativo completo para gestão de clientes, agenda e controle financeiro.',
+    features: [
+      'Página de apresentação profissional',
+      'Catálogo de serviços com preços',
+      'Portfólio interativo de fotos',
+      'Agendamento online',
+      'Painel administrativo completo',
+      'Gestão de clientes com histórico',
+      'Dashboard financeiro',
+      'Gestão de estoque',
+    ],
+    technologies: ['React', 'TypeScript', 'Supabase', 'Tailwind CSS'],
+    solutionId: 'nail-designers',
+    coverImage: '/assets/cases/studio-barboza-nails/cover.webp',
+    galleryImages: [],
+    videoThumbnail: null,
+    image: null,
+    demoUrl: null,
+    status: 'Ativo',
+  },
+  {
+    id: 'a2-form-controller',
+    slug: 'a2-form-controller',
+    name: 'A2 FORM Controller — ILPI Aconchego dos Avós',
+    segment: 'Saúde / Gestão de ILPIs',
+    shortDescription: 'Sistema de gestão integrada para Instituição de Longa Permanência para Idosos com prontuário eletrônico, ponto digital e dashboards.',
+    description: 'O A2 FORM Controller foi desenvolvido para a ILPI Aconchego dos Avós, digitalizando toda a operação da instituição. O sistema integra prontuário eletrônico, gestão de residentes, controle de equipe, ponto eletrônico e dashboards operacionais em uma única plataforma segura e acessível.',
+    features: [
+      'Dashboard operacional',
+      'Prontuário eletrônico completo',
+      'Gestão de residentes',
+      'Controle de equipe e escalas',
+      'Ponto eletrônico com totem',
+      'Registro de sinais vitais',
+      'Timeline clínica',
+      'Relatórios em PDF',
+      'Segurança com perfis de acesso',
+    ],
+    technologies: ['React', 'Supabase', 'PostgreSQL'],
+    solutionId: 'a2-form-ilpi',
+    coverImage: '/assets/cases/a2-form-controller/cover.webp',
+    galleryImages: [],
+    videoThumbnail: null,
+    image: null,
+    demoUrl: null,
+    status: 'Ativo',
+  },
+];
+
+export default cases;
