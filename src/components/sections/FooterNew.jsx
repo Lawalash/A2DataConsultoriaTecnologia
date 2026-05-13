@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronUp, MessageCircle } from 'lucide-react';
+import { ChevronUp } from 'lucide-react';
 import siteConfig from '../../data/siteConfig';
 import './FooterNew.css';
 
@@ -58,9 +58,9 @@ const FooterNew = () => {
         <div className="footer-new__bottom">
           <p>© 2026 A2 Data. Todos os direitos reservados.</p>
           <div className="footer-new__bottom-links">
-            <a href="#">Termos de Uso</a>
-            <a href="#">Privacidade</a>
-            <a href="#">LGPD</a>
+            <span style={{cursor: 'pointer'}}>Termos de Uso</span>
+            <span style={{cursor: 'pointer'}}>Privacidade</span>
+            <span style={{cursor: 'pointer'}}>LGPD</span>
           </div>
         </div>
       </div>

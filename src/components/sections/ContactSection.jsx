@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Send, MessageCircle, MapPin, Mail, Phone, Loader2 } from 'lucide-react';
+import { Send, MessageCircle, MapPin, Mail, Loader2 } from 'lucide-react';
 import siteConfig from '../../data/siteConfig';
 import solutions from '../../data/solutions';
 import { leadsService } from '../../services/leadsService';
