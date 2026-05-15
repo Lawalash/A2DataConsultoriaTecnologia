@@ -29,7 +29,6 @@ const SolutionPage = () => {
     );
   }
 
-  const whatsappLink = `https://wa.me/${siteConfig.contact.whatsapp.number}?text=${encodeURIComponent(solution.whatsappMessage)}`;
   const faqItems = solution.id === 'nail-designers' ? faqNail : faqIlpi;
 
   const allFeatures = [

@@ -14,8 +14,6 @@ const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const whatsappLink = `https://wa.me/${siteConfig.contact.whatsapp.number}?text=${encodeURIComponent(siteConfig.contact.whatsapp.defaultMessage)}`;
-
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 30);
     window.addEventListener('scroll', handleScroll, { passive: true });

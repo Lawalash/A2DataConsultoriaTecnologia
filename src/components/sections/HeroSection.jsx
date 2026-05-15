@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowRight, MessageCircle, Sparkles, Activity, Database, Lock, Globe, Server, Code } from 'lucide-react';
-import siteConfig from '../../data/siteConfig';
+import { ArrowRight, MessageCircle, Sparkles, Activity, Database, Lock } from 'lucide-react';
 import PreScreeningModal from '../PreScreeningModal/PreScreeningModal';
 import './HeroSection.css';
 

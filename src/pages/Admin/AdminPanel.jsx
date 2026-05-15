@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { LayoutDashboard, Package, Briefcase, Users, Settings, Plus, Eye, Edit, BarChart3, Lock, LogOut, Loader2, Save, X } from 'lucide-react';
+import { LayoutDashboard, Package, Briefcase, Users, Settings, Plus, Edit, BarChart3, Lock, LogOut, Loader2, Save } from 'lucide-react';
 import { supabase } from '../../lib/supabaseClient';
 import staticSolutions from '../../data/solutions';
 import staticCases from '../../data/cases';
@@ -52,7 +52,7 @@ const AdminPanel = () => {
     setLoadingData(true);
     try {
       // Fetch Leads
-      const { data: leadsData, error: leadsError } = await supabase
+      const { data: leadsData } = await supabase
         .from('leads')
         .select('*')
         .order('created_at', { ascending: false });
@@ -60,7 +60,7 @@ const AdminPanel = () => {
       if (leadsData) setLeads(leadsData);
 
       // Fetch Cases
-      const { data: dbCases, error: casesError } = await supabase
+      const { data: dbCases } = await supabase
         .from('cases')
         .select('*')
         .order('created_at', { ascending: false });
@@ -827,8 +827,6 @@ const AnalyticsTab = ({ leads }) => {
   }, []);
 
   const totalProposals = leads.length;
-  const conversoes = leads.filter(l => l.status === 'fechado').length;
-  
   const pageViews = events.filter(e => e.event_type === 'page_view').length;
   const whatsappClicks = events.filter(e => e.event_label === 'whatsapp_proposal_send').length;
   

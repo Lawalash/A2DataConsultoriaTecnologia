@@ -18,7 +18,7 @@ const CasePage = () => {
     const fetchCase = async () => {
       try {
         if (!supabase) throw new Error('Supabase not configured');
-        const { data, error } = await supabase
+        const { data } = await supabase
           .from('cases')
           .select('*')
           .eq('slug', slug)

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Check, Play, X, ShieldCheck, Sparkles, Activity } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
 import solutions from '../../data/solutions';
-import siteConfig from '../../data/siteConfig';
 import PreScreeningModal from '../PreScreeningModal/PreScreeningModal';
 import './SolutionsSection.css';
 
