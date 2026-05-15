@@ -13,8 +13,13 @@ export const leadsService = {
         .from('leads')
         .insert([
           {
+            proposal_id: payload.proposal_id || null,
             name: payload.name,
             whatsapp: payload.whatsapp,
+            email: payload.email || null,
+            business_name: payload.business_name || null,
+            city: payload.city || null,
+            referral_source: payload.referral_source || null,
             solution_interest: payload.solution_interest,
             message: payload.message,
             source_page: payload.source_page || window.location.pathname,

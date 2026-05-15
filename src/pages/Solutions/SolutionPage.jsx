@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Check, Play, ShieldCheck, Sparkles, Clock, Activity } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
@@ -8,10 +8,12 @@ import { faqNail, faqIlpi } from '../../data/faq';
 import FaqSection from '../../components/sections/FaqSection';
 import ContactSection from '../../components/sections/ContactSection';
 import FooterNew from '../../components/sections/FooterNew';
+import PreScreeningModal from '../../components/PreScreeningModal/PreScreeningModal';
 import './SolutionPage.css';
 
 const SolutionPage = () => {
   const { slug } = useParams();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const solution = solutions.find((s) => s.slug === slug);
 
   useEffect(() => {
@@ -60,10 +62,10 @@ const SolutionPage = () => {
           <h1 className="sp-hero__title">{solution.headline}</h1>
           <p className="sp-hero__subtitle">{solution.subheadline}</p>
           <div className="sp-hero__ctas">
-            <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-lg">
+            <button className="btn btn-primary btn-lg" onClick={() => setIsModalOpen(true)}>
               <FaWhatsapp size={18} />
               <span>{solution.ctas.primary.text}</span>
-            </a>
+            </button>
             <button className="btn btn-secondary btn-lg" onClick={() => {
               const el = document.getElementById('sp-video-section');
               if (el) window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' });
@@ -215,10 +217,10 @@ const SolutionPage = () => {
               <p className="sp-pricing__extra">{solution.pricing.extra}</p>
             )}
             <div className="sp-pricing__cta">
-              <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp btn-lg">
+              <button className="btn btn-whatsapp btn-lg" onClick={() => setIsModalOpen(true)}>
                 <FaWhatsapp size={18} />
                 <span>{solution.ctas.primary.text}</span>
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -230,6 +232,13 @@ const SolutionPage = () => {
       {/* Contact + Footer */}
       <ContactSection />
       <FooterNew />
+
+      {/* Pre-Screening Modal */}
+      <PreScreeningModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        solution={solution} 
+      />
     </>
   );
 };

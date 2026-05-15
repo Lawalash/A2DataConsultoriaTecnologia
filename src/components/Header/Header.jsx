@@ -3,11 +3,13 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
 import siteConfig from '../../data/siteConfig';
+import PreScreeningModal from '../PreScreeningModal/PreScreeningModal';
 import './Header.css';
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('inicio');
   const location = useLocation();
   const navigate = useNavigate();
@@ -89,10 +91,10 @@ const Header = () => {
           </nav>
 
           <div className="header__actions">
-            <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp btn-sm header__cta">
+            <button onClick={() => setModalOpen(true)} className="btn btn-whatsapp btn-sm header__cta">
               <FaWhatsapp size={16} />
-              <span>Falar no WhatsApp</span>
-            </a>
+              <span>Falar com Consultor</span>
+            </button>
           </div>
 
           <button
@@ -121,12 +123,13 @@ const Header = () => {
               </a>
             ))}
           </nav>
-          <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp btn-lg mobile-menu__cta">
+          <button onClick={() => { setMobileOpen(false); setModalOpen(true); }} className="btn btn-whatsapp btn-lg mobile-menu__cta">
             <FaWhatsapp size={18} />
-            <span>Falar no WhatsApp</span>
-          </a>
+            <span>Falar com Consultor</span>
+          </button>
         </div>
       </div>
+      <PreScreeningModal isOpen={modalOpen} onClose={() => setModalOpen(false)} solution={null} />
     </>
   );
 };

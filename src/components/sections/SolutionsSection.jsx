@@ -4,6 +4,7 @@ import { ArrowRight, Check, Play, X, ShieldCheck, Sparkles, Activity } from 'luc
 import { FaWhatsapp } from 'react-icons/fa';
 import solutions from '../../data/solutions';
 import siteConfig from '../../data/siteConfig';
+import PreScreeningModal from '../PreScreeningModal/PreScreeningModal';
 import './SolutionsSection.css';
 
 const VideoModal = ({ isOpen, onClose, videoUrl }) => {
@@ -86,7 +87,7 @@ const PricingBadge = ({ pricing }) => (
 
 const SolutionCard = ({ solution }) => {
   const [videoOpen, setVideoOpen] = useState(false);
-  const whatsappLink = `https://wa.me/${siteConfig.contact.whatsapp.number}?text=${encodeURIComponent(solution.whatsappMessage)}`;
+  const [modalOpen, setModalOpen] = useState(false);
 
   return (
     <>
@@ -125,10 +126,10 @@ const SolutionCard = ({ solution }) => {
         <PricingBadge pricing={solution.pricing} />
 
         <div className="solution-card__ctas">
-          <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+          <button onClick={() => setModalOpen(true)} className="btn btn-primary">
             <FaWhatsapp size={16} />
             <span>{solution.ctas.primary.text}</span>
-          </a>
+          </button>
           <Link to={`/solucoes/${solution.slug}`} className="btn btn-secondary">
             <span>Ver detalhes</span>
             <ArrowRight size={16} />
@@ -137,6 +138,7 @@ const SolutionCard = ({ solution }) => {
       </div>
 
       <VideoModal isOpen={videoOpen} onClose={() => setVideoOpen(false)} videoUrl={solution.videoUrl} />
+      <PreScreeningModal isOpen={modalOpen} onClose={() => setModalOpen(false)} solution={solution} />
     </>
   );
 };
