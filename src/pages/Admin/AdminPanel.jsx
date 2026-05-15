@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { LayoutDashboard, Package, Briefcase, Users, Settings, Plus, Eye, Edit, BarChart3 } from 'lucide-react';
+import { LayoutDashboard, Package, Briefcase, Users, Settings, Plus, Eye, Edit, BarChart3, Lock, LogOut } from 'lucide-react';
+import { supabase } from '../../lib/supabaseClient';
 import solutions from '../../data/solutions';
 import cases from '../../data/cases';
 import siteConfig from '../../data/siteConfig';
@@ -21,6 +22,77 @@ const statusColors = {
 
 const AdminPanel = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loginForm, setLoginForm] = useState({ email: '', password: '' });
+  const [loginError, setLoginError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Check initial session
+  React.useEffect(() => {
+    if (supabase) {
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (session) setIsAuthenticated(true);
+      });
+    }
+  }, []);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    if (!supabase) {
+      // Mock login for offline dev if Supabase is not configured
+      if (loginForm.password === '123321') {
+        setIsAuthenticated(true);
+        return;
+      }
+      setLoginError('Senha incorreta (Mock: use 123321)');
+      return;
+    }
+
+    setIsLoading(true);
+    setLoginError('');
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: loginForm.email,
+      password: loginForm.password,
+    });
+
+    setIsLoading(false);
+    if (error) {
+      setLoginError('Credenciais inválidas');
+    } else if (data.session) {
+      setIsAuthenticated(true);
+    }
+  };
+
+  const handleLogout = async () => {
+    if (supabase) await supabase.auth.signOut();
+    setIsAuthenticated(false);
+  };
+
+  if (!isAuthenticated) {
+    return (
+      <div className="admin-login">
+        <form className="admin-login__form glass-card" onSubmit={handleLogin}>
+          <div className="admin-login__header">
+            <Lock size={32} className="admin-login__icon" />
+            <h2>Acesso Restrito</h2>
+            <p>Faça login para acessar o painel</p>
+          </div>
+          {loginError && <div className="admin-login__error">{loginError}</div>}
+          <div className="admin-login__field">
+            <label>E-mail</label>
+            <input type="email" value={loginForm.email} onChange={(e) => setLoginForm({ ...loginForm, email: e.target.value })} required placeholder="admin@a2data.com.br" />
+          </div>
+          <div className="admin-login__field">
+            <label>Senha</label>
+            <input type="password" value={loginForm.password} onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })} required placeholder="••••••••" />
+          </div>
+          <button type="submit" disabled={isLoading} className="btn btn-primary admin-login__btn">
+            {isLoading ? 'Entrando...' : 'Entrar'}
+          </button>
+        </form>
+      </div>
+    );
+  }
 
   const tabs = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -50,6 +122,10 @@ const AdminPanel = () => {
             </button>
           ))}
         </nav>
+        <button className="admin__logout" onClick={handleLogout}>
+          <LogOut size={16} />
+          <span>Sair</span>
+        </button>
       </aside>
 
       {/* Main */}

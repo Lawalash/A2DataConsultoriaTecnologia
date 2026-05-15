@@ -69,6 +69,11 @@
   cursor: pointer;
 }
 
+.contact__field select option {
+  background: var(--surface);
+  color: var(--text-primary);
+}
+
 .contact__field textarea {
   resize: vertical;
   min-height: 100px;

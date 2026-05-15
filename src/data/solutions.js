@@ -10,7 +10,7 @@ const solutions = [
     icon: 'Sparkles',
     coverImage: '/assets/solutions/nail-designers/cover.webp',
     videoThumbnail: '/assets/solutions/nail-designers/video-thumb.webp',
-    heroImage: '/assets/solutions/nail-designers/hero.webp',
+    heroImage: '/assets/solutions/nail-designers/hero.png',
     audience: 'Nail designers autônomas e pequenos estúdios de unhas',
     shortDescription: 'Página personalizada, agenda, clientes, portfólio e gestão financeira em um só lugar.',
     headline: 'Sistema completo para Nail Designers que querem organizar o atendimento e apresentar sua marca com mais profissionalismo.',
@@ -73,8 +73,8 @@ const solutions = [
       trial: '15 dias grátis',
       launchPrice: null,
       regularPrice: 49.90,
-      implantation: 0,
-      implantationNote: 'Gratuita na fase de lançamento',
+      implantation: 120,
+      implantationNote: 'Inclui treinamento + configurações iniciais',
       cancellation: 'Cancelamento sem multa',
     },
     ctas: {
@@ -83,7 +83,8 @@ const solutions = [
       tertiary: { text: 'Falar no WhatsApp', action: 'whatsapp' },
     },
     whatsappMessage: 'Olá, Ricardo! Vi a solução para Nail Designers no site da A2 Data e quero entender como funcionaria para mim.',
-    videoPlaceholder: true,
+    videoUrl: 'https://www.youtube.com/embed/VhC2IlNQgmw',
+    videoPlaceholder: false,
   },
   {
     id: 'a2-form-ilpi',
@@ -93,7 +94,7 @@ const solutions = [
     icon: 'Activity',
     coverImage: '/assets/solutions/a2-form-ilpi/cover.webp',
     videoThumbnail: '/assets/solutions/a2-form-ilpi/video-thumb.webp',
-    heroImage: '/assets/solutions/a2-form-ilpi/hero.webp',
+    heroImage: '/assets/solutions/a2-form-ilpi/hero.png',
     audience: 'Instituições de Longa Permanência para Idosos',
     shortDescription: 'Prontuário, equipe, ponto e gestão em uma única plataforma.',
     headline: 'Gestão digital para ILPIs: prontuário, equipe, ponto e operação em um único sistema.',
@@ -175,7 +176,8 @@ const solutions = [
       tertiary: { text: 'Falar com Ricardo', action: 'whatsapp' },
     },
     whatsappMessage: 'Olá, Ricardo! Vi o A2 FORM Controller no site da A2 Data e gostaria de conhecer a solução para minha ILPI.',
-    videoPlaceholder: true,
+    videoUrl: 'https://www.youtube.com/embed/Nw34DiYAlpI',
+    videoPlaceholder: false,
   },
 ];
 

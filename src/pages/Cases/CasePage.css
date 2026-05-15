@@ -25,13 +25,20 @@
   max-width: 760px;
 }
 
+.cp-hero__top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
 .cp-hero__back {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   font-size: 0.82rem;
   color: var(--text-muted);
-  margin-bottom: 16px;
   transition: color var(--transition-fast);
 }
 

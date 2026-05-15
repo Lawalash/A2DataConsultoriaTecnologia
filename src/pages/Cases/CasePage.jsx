@@ -26,12 +26,18 @@ const CasePage = () => {
   return (
     <>
       <section className="cp-hero">
-        <div className="cp-hero__bg" />
+        {caseData.coverImage ? (
+          <div className="cp-hero__bg" style={{ backgroundImage: `linear-gradient(to bottom, rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.95)), url(${caseData.coverImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
+        ) : (
+          <div className="cp-hero__bg" />
+        )}
         <div className="container cp-hero__content">
-          <Link to="/#cases" className="cp-hero__back">
-            <ArrowLeft size={16} /> Voltar aos cases
-          </Link>
-          <span className="badge badge-accent">{caseData.segment}</span>
+          <div className="cp-hero__top">
+            <Link to="/#cases" className="cp-hero__back">
+              <ArrowLeft size={16} /> Voltar aos cases
+            </Link>
+            <span className="badge badge-accent">{caseData.segment}</span>
+          </div>
           <h1 className="cp-hero__title">{caseData.name}</h1>
           <p className="cp-hero__description">{caseData.description}</p>
           <div className="cp-hero__status">

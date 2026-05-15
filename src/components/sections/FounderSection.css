@@ -22,9 +22,9 @@
 
 .founder__image {
   width: 100%;
+  height: auto;
+  display: block;
   border-radius: var(--radius-lg);
-  object-fit: cover;
-  aspect-ratio: 3/4;
 }
 
 .founder__image-glow {

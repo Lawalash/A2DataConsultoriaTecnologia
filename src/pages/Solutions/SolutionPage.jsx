@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Check, Play, MessageCircle, ShieldCheck, Sparkles, Clock, Activity } from 'lucide-react';
+import { ArrowLeft, Check, Play, ShieldCheck, Sparkles, Clock, Activity } from 'lucide-react';
+import { FaWhatsapp } from 'react-icons/fa';
 import solutions from '../../data/solutions';
 import siteConfig from '../../data/siteConfig';
 import { faqNail, faqIlpi } from '../../data/faq';
@@ -41,10 +42,14 @@ const SolutionPage = () => {
     <>
       {/* Hero */}
       <section className="sp-hero">
-        <div className="sp-hero__bg">
-          <div className="sp-hero__orb sp-hero__orb--1" />
-          <div className="sp-hero__orb sp-hero__orb--2" />
-        </div>
+        {solution.heroImage ? (
+          <div className="sp-hero__bg" style={{ backgroundImage: `linear-gradient(to bottom, rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.95)), url(${solution.heroImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
+        ) : (
+          <div className="sp-hero__bg">
+            <div className="sp-hero__orb sp-hero__orb--1" />
+            <div className="sp-hero__orb sp-hero__orb--2" />
+          </div>
+        )}
         <div className="container sp-hero__content">
           <Link to="/#solucoes" className="sp-hero__back">
             <ArrowLeft size={16} /> Voltar às soluções
@@ -56,10 +61,13 @@ const SolutionPage = () => {
           <p className="sp-hero__subtitle">{solution.subheadline}</p>
           <div className="sp-hero__ctas">
             <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-lg">
-              <MessageCircle size={18} />
+              <FaWhatsapp size={18} />
               <span>{solution.ctas.primary.text}</span>
             </a>
-            <button className="btn btn-secondary btn-lg">
+            <button className="btn btn-secondary btn-lg" onClick={() => {
+              const el = document.getElementById('sp-video-section');
+              if (el) window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' });
+            }}>
               <Play size={18} />
               <span>{solution.ctas.secondary.text}</span>
             </button>
@@ -130,19 +138,32 @@ const SolutionPage = () => {
       </section>
 
       {/* Video Demo */}
-      <section className="sp-section">
+      <section className="sp-section" id="sp-video-section">
         <div className="container">
           <div className="sp-video-header">
             <span className="section-label">Demonstração</span>
             <h2 className="section-title">Veja o sistema em ação</h2>
           </div>
           <div className="sp-video glass-card">
-            <div className="sp-video__placeholder">
-              <div className="sp-video__play">
-                <Play size={40} />
+            {solution.videoUrl ? (
+              <div style={{ position: 'relative', width: '100%', paddingTop: '56.25%' }}>
+                <iframe 
+                  src={solution.videoUrl} 
+                  title="Demonstração" 
+                  frameBorder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowFullScreen
+                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', borderRadius: '8px' }}
+                ></iframe>
               </div>
-              <p>Vídeo demonstrativo em breve</p>
-            </div>
+            ) : (
+              <div className="sp-video__placeholder">
+                <div className="sp-video__play">
+                  <Play size={40} />
+                </div>
+                <p>Vídeo demonstrativo em breve</p>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -195,7 +216,7 @@ const SolutionPage = () => {
             )}
             <div className="sp-pricing__cta">
               <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp btn-lg">
-                <MessageCircle size={18} />
+                <FaWhatsapp size={18} />
                 <span>{solution.ctas.primary.text}</span>
               </a>
             </div>

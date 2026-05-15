@@ -1,20 +1,34 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Check, Play, X, ShieldCheck, MessageCircle, Sparkles, Activity } from 'lucide-react';
+import { ArrowRight, Check, Play, X, ShieldCheck, Sparkles, Activity } from 'lucide-react';
+import { FaWhatsapp } from 'react-icons/fa';
 import solutions from '../../data/solutions';
 import siteConfig from '../../data/siteConfig';
 import './SolutionsSection.css';
 
-const VideoModal = ({ isOpen, onClose }) => {
+const VideoModal = ({ isOpen, onClose, videoUrl }) => {
   if (!isOpen) return null;
   return (
     <div className="video-modal" onClick={onClose}>
       <div className="video-modal__content glass-card" onClick={(e) => e.stopPropagation()}>
         <button className="video-modal__close" onClick={onClose}><X size={24} /></button>
-        <div className="video-modal__placeholder">
-          <Play size={48} />
-          <p>Vídeo demonstrativo em breve</p>
-        </div>
+        {videoUrl ? (
+          <div className="video-modal__iframe-wrapper" style={{ position: 'relative', width: '100%', paddingTop: '56.25%' }}>
+            <iframe 
+              src={videoUrl} 
+              title="Demonstração" 
+              frameBorder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowFullScreen
+              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', borderRadius: '8px' }}
+            ></iframe>
+          </div>
+        ) : (
+          <div className="video-modal__placeholder">
+            <Play size={48} />
+            <p>Vídeo demonstrativo em breve</p>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -112,7 +126,7 @@ const SolutionCard = ({ solution }) => {
 
         <div className="solution-card__ctas">
           <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-            <MessageCircle size={16} />
+            <FaWhatsapp size={16} />
             <span>{solution.ctas.primary.text}</span>
           </a>
           <Link to={`/solucoes/${solution.slug}`} className="btn btn-secondary">
@@ -122,7 +136,7 @@ const SolutionCard = ({ solution }) => {
         </div>
       </div>
 
-      <VideoModal isOpen={videoOpen} onClose={() => setVideoOpen(false)} />
+      <VideoModal isOpen={videoOpen} onClose={() => setVideoOpen(false)} videoUrl={solution.videoUrl} />
     </>
   );
 };

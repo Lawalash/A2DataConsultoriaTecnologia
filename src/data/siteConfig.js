@@ -25,12 +25,12 @@ const siteConfig = {
       displayNumber: '(83) 99372-5984',
       defaultMessage: 'Olá, Ricardo! Vi o site da A2 Data e gostaria de conhecer melhor as soluções.',
     },
-    email: 'contato@a2data.com.br',
+    email: 'jrvariedadescg@gmail.com',
     instagram: {
       url: 'https://www.instagram.com/a2data_/',
       handle: '@a2data_',
     },
-    location: 'Campina Grande/PB',
+    location: 'R. Robério Maracajá Henrique, 345 - Três Irmãs',
   },
   seo: {
     title: 'A2 Data — Soluções Digitais Prontas para seu Negócio',

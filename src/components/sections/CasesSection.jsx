@@ -20,7 +20,10 @@ const CasesSection = () => (
           <div key={c.id} className="case-card glass-card">
             {/* Image placeholder */}
             <div className="case-card__image">
-              <div className="case-card__image-placeholder">
+              <div 
+                className="case-card__image-placeholder"
+                style={c.coverImage ? { backgroundImage: `url(${c.coverImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}
+              >
                 <span className="case-card__segment-badge badge badge-accent">{c.segment}</span>
               </div>
             </div>

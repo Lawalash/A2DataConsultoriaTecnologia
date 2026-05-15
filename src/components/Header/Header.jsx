@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, MessageCircle } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
+import { FaWhatsapp } from 'react-icons/fa';
 import siteConfig from '../../data/siteConfig';
 import './Header.css';
 
@@ -89,7 +90,7 @@ const Header = () => {
 
           <div className="header__actions">
             <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp btn-sm header__cta">
-              <MessageCircle size={16} />
+              <FaWhatsapp size={16} />
               <span>Falar no WhatsApp</span>
             </a>
           </div>
@@ -121,7 +122,7 @@ const Header = () => {
             ))}
           </nav>
           <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp btn-lg mobile-menu__cta">
-            <MessageCircle size={18} />
+            <FaWhatsapp size={18} />
             <span>Falar no WhatsApp</span>
           </a>
         </div>

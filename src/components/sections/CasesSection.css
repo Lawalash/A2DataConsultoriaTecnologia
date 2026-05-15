@@ -28,7 +28,8 @@
 }
 
 .case-card__image-placeholder {
-  height: 200px;
+  width: 100%;
+  aspect-ratio: 16/9;
   background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(6, 214, 160, 0.04));
   display: flex;
   align-items: flex-end;
