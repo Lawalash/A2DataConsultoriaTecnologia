@@ -3,7 +3,6 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Check, Play, ShieldCheck, Sparkles, Clock, Activity } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
 import solutions from '../../data/solutions';
-import siteConfig from '../../data/siteConfig';
 import { faqNail, faqIlpi } from '../../data/faq';
 import FaqSection from '../../components/sections/FaqSection';
 import ContactSection from '../../components/sections/ContactSection';
