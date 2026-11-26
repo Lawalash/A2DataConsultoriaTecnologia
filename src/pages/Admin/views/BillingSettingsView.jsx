@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
   Bot,
+  Loader2,
   MessageSquare,
   Save,
   Search,
@@ -166,7 +167,11 @@ const BillingSettingsView = ({ projects, clients, templates, logs, onRefresh, on
             onClick={handleCheckEvolution}
             disabled={checkingEvolution}
           >
-            <Wifi size={15} className={checkingEvolution ? 'spin' : ''} />
+            {checkingEvolution ? (
+              <Loader2 size={15} className="animate-spin" />
+            ) : (
+              <Wifi size={15} />
+            )}
             <span>{checkingEvolution ? 'Verificando...' : 'Testar Evolution API'}</span>
           </button>
         </div>

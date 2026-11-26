@@ -5,6 +5,7 @@ import {
   Database,
   Edit3,
   HardDrive,
+  Loader2,
   Lock,
   MessageCircle,
   Plus,
@@ -350,7 +351,7 @@ const ProjectDetailView = ({
             onClick={handleTestConnection}
             disabled={testingHealth}
           >
-            <Wifi size={15} className={testingHealth ? 'spin' : ''} />
+            {testingHealth ? <Loader2 size={15} className="animate-spin" /> : <Wifi size={15} />}
             <span>{testingHealth ? 'Testando...' : 'Testar Conexão'}</span>
           </button>
           <button

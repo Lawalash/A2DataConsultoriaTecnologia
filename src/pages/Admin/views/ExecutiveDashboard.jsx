@@ -6,6 +6,7 @@ import {
   Database,
   DollarSign,
   HardDrive,
+  Loader2,
   Lock,
   Plus,
   RefreshCw,
@@ -135,7 +136,7 @@ const ExecutiveDashboard = ({
             onClick={handleTestAllHealth}
             disabled={testingAll || supabaseProjects.length === 0}
           >
-            <RefreshCw size={16} className={testingAll ? 'spin' : ''} />
+            {testingAll ? <Loader2 size={16} className="animate-spin" /> : <RefreshCw size={16} />}
             <span>{testingAll ? 'Verificando...' : 'Testar Saúde (Todos)'}</span>
           </button>
           <button
