@@ -1,12 +1,17 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
+  AlertTriangle,
   Bot,
+  CheckCircle2,
   Loader2,
   MessageSquare,
+  QrCode,
+  RefreshCw,
   Save,
   Search,
   Server,
   Wifi,
+  X,
 } from 'lucide-react';
 import {
   cockpitService,
@@ -37,6 +42,9 @@ const BillingSettingsView = ({ projects, clients, templates, logs, onRefresh, on
   const [savingKey, setSavingKey] = useState(null);
   const [evolutionStatus, setEvolutionStatus] = useState(null);
   const [checkingEvolution, setCheckingEvolution] = useState(false);
+  const [qrModalOpen, setQrModalOpen] = useState(false);
+  const [loadingQr, setLoadingQr] = useState(false);
+  const [qrData, setQrData] = useState(null);
 
   // Filters for logs
   const [logProjectFilter, setLogProjectFilter] = useState('');
@@ -98,6 +106,28 @@ const BillingSettingsView = ({ projects, clients, templates, logs, onRefresh, on
       onNotify(err.message || 'Erro ao verificar Evolution API.', 'error');
     } finally {
       setCheckingEvolution(false);
+    }
+  };
+
+  const handleOpenQrModal = async () => {
+    setQrModalOpen(true);
+    setLoadingQr(true);
+    try {
+      const res = await cockpitService.getEvolutionQrCode();
+      setQrData(res);
+      if (res?.state === 'open') {
+        setEvolutionStatus(res);
+        onNotify(`WhatsApp conectado na instância ${res.instanceName}.`, 'success');
+      }
+    } catch (err) {
+      setQrData({
+        ok: false,
+        configured: true,
+        state: 'error',
+        error: err.message || 'Erro ao buscar QR Code.',
+      });
+    } finally {
+      setLoadingQr(false);
     }
   };
 
@@ -193,27 +223,38 @@ const BillingSettingsView = ({ projects, clients, templates, logs, onRefresh, on
           </div>
         </div>
 
-        <div className="cockpit-evolution-bar__status">
-          {evolutionStatus ? (
-            <span
-              className={`cockpit-pill cockpit-pill--${
-                evolutionStatus.ok && evolutionStatus.state === 'open'
-                  ? 'success'
-                  : evolutionStatus.configured === false
-                  ? 'warning'
-                  : 'danger'
-              }`}
-            >
-              <span className="cockpit-dot" />
-              {evolutionStatus.state === 'open'
-                ? `Conectada (${evolutionStatus.instanceName})`
-                : evolutionStatus.error || `Estado: ${evolutionStatus.state}`}
-            </span>
-          ) : (
-            <span className="cockpit-pill cockpit-pill--muted">
-              Clique em "Testar Evolution API" para validar
-            </span>
-          )}
+        <div className="cockpit-evolution-bar__actions">
+          <div className="cockpit-evolution-bar__status">
+            {evolutionStatus ? (
+              <span
+                className={`cockpit-pill cockpit-pill--${
+                  evolutionStatus.ok && evolutionStatus.state === 'open'
+                    ? 'success'
+                    : evolutionStatus.configured === false
+                    ? 'warning'
+                    : 'danger'
+                }`}
+              >
+                <span className="cockpit-dot" />
+                {evolutionStatus.state === 'open'
+                  ? `Conectada (${evolutionStatus.instanceName})`
+                  : evolutionStatus.error || `Estado: ${evolutionStatus.state}`}
+              </span>
+            ) : (
+              <span className="cockpit-pill cockpit-pill--muted">
+                Clique em "Testar Evolution API" para validar
+              </span>
+            )}
+          </div>
+
+          <button
+            type="button"
+            className="cockpit-btn cockpit-btn--primary cockpit-btn--sm"
+            onClick={handleOpenQrModal}
+          >
+            <QrCode size={15} />
+            <span>Conectar / Gerar QR Code</span>
+          </button>
         </div>
       </div>
 
@@ -405,6 +446,109 @@ const BillingSettingsView = ({ projects, clients, templates, logs, onRefresh, on
           </table>
         </div>
       </section>
+
+      {/* Modal: Conectar / QR Code Evolution API */}
+      {qrModalOpen && (
+        <div className="cockpit-modal-backdrop" onClick={() => setQrModalOpen(false)}>
+          <div className="cockpit-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="cockpit-modal__head">
+              <h3>Conectar WhatsApp (Evolution API v2)</h3>
+              <button type="button" className="cockpit-icon-btn" onClick={() => setQrModalOpen(false)}>
+                <X size={18} />
+              </button>
+            </div>
+
+            <div className="cockpit-form">
+              {loadingQr ? (
+                <div className="cockpit-loading-inline">
+                  <Loader2 size={24} className="animate-spin" />
+                  <span>Gerando QR Code na Evolution API...</span>
+                </div>
+              ) : qrData?.configured === false ? (
+                <div className="cockpit-banner cockpit-banner--warning">
+                  <AlertTriangle size={20} />
+                  <div>
+                    <strong>Evolution API ainda não configurada na VPS.</strong>
+                    <p style={{ marginTop: '4px' }}>
+                      Configure os Secrets <code>EVOLUTION_API_URL</code>,{' '}
+                      <code>EVOLUTION_API_KEY</code> e <code>EVOLUTION_INSTANCE_NAME</code> no projeto Supabase{' '}
+                      <code>A2DATASITE</code> para habilitar a geração do QR Code.
+                    </p>
+                  </div>
+                </div>
+              ) : qrData?.state === 'open' ? (
+                <div className="cockpit-qr-connected">
+                  <div className="cockpit-qr-connected__icon">
+                    <CheckCircle2 size={32} />
+                  </div>
+                  <h4>WhatsApp Conectado</h4>
+                  <p>
+                    A instância <code>{qrData.instanceName}</code> está com status{' '}
+                    <strong>open</strong> e pronta para os disparos automáticos.
+                  </p>
+                </div>
+              ) : qrData?.base64 || qrData?.pairingCode ? (
+                <div className="cockpit-qr-box">
+                  <p className="cockpit-qr-box__hint">
+                    Abra o WhatsApp no celular → <strong>Dispositivos conectados</strong> →{' '}
+                    <strong>Conectar dispositivo</strong> e escaneie o código abaixo:
+                  </p>
+                  {qrData.base64 && (
+                    <img
+                      className="cockpit-qr-img"
+                      alt="QR Code WhatsApp Evolution API"
+                      src={
+                        qrData.base64.startsWith('data:image')
+                          ? qrData.base64
+                          : `data:image/png;base64,${qrData.base64}`
+                      }
+                    />
+                  )}
+                  {qrData.pairingCode && (
+                    <div className="cockpit-qr-pairing">
+                      <span>Código de pareamento:</span>
+                      <strong>{qrData.pairingCode}</strong>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="cockpit-banner cockpit-banner--danger">
+                  <AlertTriangle size={18} />
+                  <div>
+                    <strong>Não foi possível obter o QR Code.</strong>
+                    <p style={{ marginTop: '4px' }}>
+                      {qrData?.error || `Estado retornado: ${qrData?.state || 'desconhecido'}`}
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              <div className="cockpit-modal__foot">
+                <button
+                  type="button"
+                  className="cockpit-btn cockpit-btn--ghost"
+                  onClick={() => setQrModalOpen(false)}
+                >
+                  Fechar
+                </button>
+                <button
+                  type="button"
+                  className="cockpit-btn cockpit-btn--primary"
+                  onClick={handleOpenQrModal}
+                  disabled={loadingQr}
+                >
+                  {loadingQr ? (
+                    <Loader2 size={15} className="animate-spin" />
+                  ) : (
+                    <RefreshCw size={15} />
+                  )}
+                  <span>Atualizar QR Code</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

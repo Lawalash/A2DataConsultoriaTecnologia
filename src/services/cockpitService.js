@@ -90,6 +90,16 @@ async function invokeEdgeFunction(name, body) {
   return data;
 }
 
+async function invokeEdgeFunctionStatus(name, body) {
+  if (!supabase) throw new Error('Supabase não configurado neste ambiente.');
+  const { data, error } = await supabase.functions.invoke(name, { body });
+  if (error) {
+    const msg = await extractFunctionError(error);
+    throw new Error(msg);
+  }
+  return data;
+}
+
 export const cockpitService = {
   async checkIsMasterAdmin() {
     if (!supabase) return { allowed: false, missingSchema: false };
@@ -290,8 +300,14 @@ export const cockpitService = {
   },
 
   checkEvolutionStatus() {
-    return invokeEdgeFunction('admin-billing-notify', {
+    return invokeEdgeFunctionStatus('admin-billing-notify', {
       action: 'check_instance',
+    });
+  },
+
+  getEvolutionQrCode() {
+    return invokeEdgeFunctionStatus('admin-billing-notify', {
+      action: 'get_qr_code',
     });
   },
 };

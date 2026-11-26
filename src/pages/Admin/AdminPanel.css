@@ -977,6 +977,84 @@
   color: #1D4ED8;
 }
 
+.cockpit-evolution-bar__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.cockpit-qr-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+  text-align: center;
+}
+
+.cockpit-qr-box__hint {
+  font-size: 0.85rem;
+  color: #475569;
+  line-height: 1.5;
+}
+
+.cockpit-qr-img {
+  width: 240px;
+  height: 240px;
+  object-fit: contain;
+  border-radius: 14px;
+  border: 1px solid #E2E8F0;
+  padding: 10px;
+  background: #FFFFFF;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08);
+}
+
+.cockpit-qr-pairing {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  font-size: 0.85rem;
+  color: #475569;
+}
+
+.cockpit-qr-pairing strong {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 1rem;
+  color: #0F172A;
+  letter-spacing: 1px;
+}
+
+.cockpit-qr-connected {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 24px 16px;
+  border-radius: 12px;
+  background: #ECFDF5;
+  border: 1px solid #86EFAC;
+  text-align: center;
+  color: #065F46;
+}
+
+.cockpit-qr-connected__icon {
+  color: #059669;
+}
+
+.cockpit-qr-connected h4 {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.cockpit-qr-connected p {
+  font-size: 0.84rem;
+}
+
 .cockpit-vars-hint {
   display: flex;
   align-items: center;

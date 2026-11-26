@@ -175,3 +175,99 @@ export async function checkEvolutionInstance(): Promise<{
     };
   }
 }
+
+export async function getEvolutionQrCode(): Promise<{
+  ok: boolean;
+  configured: boolean;
+  state: string;
+  instanceName: string;
+  base64: string | null;
+  pairingCode: string | null;
+  code: string | null;
+  error?: string;
+}> {
+  const cfg = getEvolutionConfig();
+  if (!isEvolutionConfigured(cfg)) {
+    return {
+      ok: false,
+      configured: false,
+      state: 'unconfigured',
+      instanceName: cfg.instance,
+      base64: null,
+      pairingCode: null,
+      code: null,
+      error:
+        'Secrets EVOLUTION_API_URL, EVOLUTION_API_KEY ou EVOLUTION_INSTANCE_NAME não configuradas no A2DATASITE.',
+    };
+  }
+
+  try {
+    const response = await fetch(
+      `${cfg.baseUrl}/instance/connect/${encodeURIComponent(cfg.instance)}`,
+      {
+        method: 'GET',
+        headers: { apikey: cfg.apiKey },
+        signal: AbortSignal.timeout(12_000),
+      },
+    );
+
+    const data = (await response.json().catch(() => null)) as Record<string, unknown> | null;
+    if (!response.ok) {
+      return {
+        ok: false,
+        configured: true,
+        state: 'error',
+        instanceName: cfg.instance,
+        base64: null,
+        pairingCode: null,
+        code: null,
+        error: `Evolution HTTP ${response.status}`,
+      };
+    }
+
+    const inst = data?.instance as Record<string, unknown> | undefined;
+    const qrcode = data?.qrcode as Record<string, unknown> | undefined;
+
+    let state = typeof inst?.state === 'string'
+      ? inst.state
+      : typeof data?.state === 'string'
+        ? data.state
+        : 'unknown';
+
+    const base64 =
+      (typeof data?.base64 === 'string' ? data.base64 : null) ||
+      (typeof qrcode?.base64 === 'string' ? qrcode.base64 : null);
+    const pairingCode =
+      (typeof data?.pairingCode === 'string' ? data.pairingCode : null) ||
+      (typeof qrcode?.pairingCode === 'string' ? qrcode.pairingCode : null);
+    const code =
+      (typeof data?.code === 'string' ? data.code : null) ||
+      (typeof qrcode?.code === 'string' ? qrcode.code : null);
+
+    if (!base64 && !pairingCode && state === 'unknown') {
+      const status = await checkEvolutionInstance();
+      state = status.state;
+    }
+
+    return {
+      ok: true,
+      configured: true,
+      state,
+      instanceName: cfg.instance,
+      base64,
+      pairingCode,
+      code,
+    };
+  } catch (err) {
+    return {
+      ok: false,
+      configured: true,
+      state: 'unreachable',
+      instanceName: cfg.instance,
+      base64: null,
+      pairingCode: null,
+      code: null,
+      error: err instanceof Error ? err.message : 'Falha ao gerar QR Code na Evolution API',
+    };
+  }
+}

@@ -1,11 +1,15 @@
 import { corsHeaders, jsonResponse } from '../_shared/cors.ts';
 import { AdminAuthError, requireMasterAdmin } from '../_shared/adminAuth.ts';
-import { checkEvolutionInstance, sendEvolutionText } from '../_shared/evolution.ts';
+import {
+  checkEvolutionInstance,
+  getEvolutionQrCode,
+  sendEvolutionText,
+} from '../_shared/evolution.ts';
 
 type TemplateKey = 'd_minus_3' | 'due_today' | 'block_notice' | 'custom';
 
 interface NotifyPayload {
-  action?: 'send' | 'check_instance';
+  action?: 'send' | 'check_instance' | 'get_qr_code';
   project_id?: string;
   client_id?: string;
   template_key?: TemplateKey;
@@ -65,7 +69,12 @@ Deno.serve(async (req: Request) => {
 
     if (body?.action === 'check_instance') {
       const status = await checkEvolutionInstance();
-      return jsonResponse(status, status.ok ? 200 : 200);
+      return jsonResponse(status, 200);
+    }
+
+    if (body?.action === 'get_qr_code') {
+      const qr = await getEvolutionQrCode();
+      return jsonResponse(qr, 200);
     }
 
     if (!body?.client_id || !body?.project_id) {
