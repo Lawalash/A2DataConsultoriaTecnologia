@@ -20,6 +20,10 @@
 .env
 
 
+# Supabase CLI temp files
+/supabase/.temp/
+/.supabase/
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

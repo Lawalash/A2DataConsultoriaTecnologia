@@ -279,6 +279,53 @@
   color: var(--accent);
 }
 
+/* Disabled Video Placeholder */
+.solution-card__video--disabled {
+  cursor: default;
+  opacity: 0.8;
+}
+
+.solution-card__video--disabled .solution-card__video-thumb:hover {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(6, 214, 160, 0.06));
+  border-color: var(--surface-border);
+}
+
+.solution-card__video--disabled .solution-card__video-thumb:hover .solution-card__play-btn {
+  transform: none;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+/* Status Badge */
+.solution-card__status {
+  font-size: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 4px 8px;
+  border-radius: var(--radius-full);
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-left: auto;
+  text-align: center;
+}
+
+/* Tags */
+.solution-card__footer-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.solution-card__tag {
+  font-size: 0.7rem;
+  background: rgba(59, 130, 246, 0.08);
+  color: var(--accent-light);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-weight: 500;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
 /* === Responsive === */
 @media (max-width: 900px) {
   .solutions__grid {

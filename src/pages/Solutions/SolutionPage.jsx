@@ -169,60 +169,68 @@ const SolutionPage = () => {
       </section>
 
       {/* Pricing */}
-      <section className="sp-section sp-section--alt">
-        <div className="container">
-          <div className="sp-pricing-header">
-            <span className="section-label">Valores</span>
-            <h2 className="section-title">Investimento claro e acessível</h2>
-          </div>
-          <div className="sp-pricing glass-card">
-            <div className="sp-pricing__grid">
-              {solution.pricing.trial && (
-                <div className="sp-pricing__item sp-pricing__item--highlight">
-                  <Sparkles size={18} />
-                  <span className="sp-pricing__item-label">Teste grátis</span>
-                  <span className="sp-pricing__item-value">{solution.pricing.trial}</span>
-                </div>
-              )}
-              <div className="sp-pricing__item">
-                <span className="sp-pricing__item-label">Mensalidade</span>
-                <span className="sp-pricing__item-value sp-pricing__item-value--big">
-                  {solution.pricing.launchPrice
-                    ? `R$ ${solution.pricing.launchPrice.toFixed(2).replace('.', ',')}`
-                    : `R$ ${solution.pricing.regularPrice.toFixed(2).replace('.', ',')}`
-                  }
-                  <small>/mês</small>
-                </span>
-              </div>
-              <div className="sp-pricing__item">
-                <span className="sp-pricing__item-label">Implantação</span>
-                <span className="sp-pricing__item-value">
-                  {solution.pricing.implantation === 0
-                    ? 'R$ 0,00'
-                    : `R$ ${solution.pricing.implantation.toFixed(2).replace('.', ',')}`
-                  }
-                </span>
-                {solution.pricing.implantationNote && (
-                  <span className="sp-pricing__item-note">{solution.pricing.implantationNote}</span>
+      {solution.pricing && (
+        <section className="sp-section sp-section--alt">
+          <div className="container">
+            <div className="sp-pricing-header">
+              <span className="section-label">Valores</span>
+              <h2 className="section-title">Investimento claro e acessível</h2>
+            </div>
+            <div className="sp-pricing glass-card">
+              <div className="sp-pricing__grid">
+                {solution.pricing.trial && (
+                  <div className="sp-pricing__item sp-pricing__item--highlight">
+                    <Sparkles size={18} />
+                    <span className="sp-pricing__item-label">Teste grátis</span>
+                    <span className="sp-pricing__item-value">{solution.pricing.trial}</span>
+                  </div>
                 )}
+                <div className="sp-pricing__item">
+                  <span className="sp-pricing__item-label">
+                    {solution.pricing.startingFrom ? 'Planos a partir de' : 'Mensalidade'}
+                  </span>
+                  <span className="sp-pricing__item-value sp-pricing__item-value--big">
+                    {solution.pricing.launchPrice
+                      ? `R$ ${solution.pricing.launchPrice.toFixed(2).replace('.', ',')}`
+                      : `R$ ${solution.pricing.regularPrice.toFixed(2).replace('.', ',')}`
+                    }
+                    <small>/mês</small>
+                  </span>
+                </div>
+                {solution.pricing.implantation !== null &&
+                  solution.pricing.implantation !== undefined &&
+                  (solution.pricing.implantation > 0 || solution.pricing.implantationNote) && (
+                    <div className="sp-pricing__item">
+                      <span className="sp-pricing__item-label">Implantação</span>
+                      <span className="sp-pricing__item-value">
+                        {solution.pricing.implantation === 0
+                          ? 'R$ 0,00'
+                          : `R$ ${solution.pricing.implantation.toFixed(2).replace('.', ',')}`
+                        }
+                      </span>
+                      {solution.pricing.implantationNote && (
+                        <span className="sp-pricing__item-note">{solution.pricing.implantationNote}</span>
+                      )}
+                    </div>
+                  )}
+              </div>
+              <div className="sp-pricing__cancel badge badge-success">
+                <ShieldCheck size={14} />
+                <span>{solution.pricing.cancellation}</span>
+              </div>
+              {solution.pricing.extra && (
+                <p className="sp-pricing__extra">{solution.pricing.extra}</p>
+              )}
+              <div className="sp-pricing__cta">
+                <button className="btn btn-whatsapp btn-lg" onClick={() => setIsModalOpen(true)}>
+                  <FaWhatsapp size={18} />
+                  <span>{solution.ctas.primary.text}</span>
+                </button>
               </div>
             </div>
-            <div className="sp-pricing__cancel badge badge-success">
-              <ShieldCheck size={14} />
-              <span>{solution.pricing.cancellation}</span>
-            </div>
-            {solution.pricing.extra && (
-              <p className="sp-pricing__extra">{solution.pricing.extra}</p>
-            )}
-            <div className="sp-pricing__cta">
-              <button className="btn btn-whatsapp btn-lg" onClick={() => setIsModalOpen(true)}>
-                <FaWhatsapp size={18} />
-                <span>{solution.ctas.primary.text}</span>
-              </button>
-            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* FAQ */}
       <FaqSection items={faqItems} title="Perguntas Frequentes" />
