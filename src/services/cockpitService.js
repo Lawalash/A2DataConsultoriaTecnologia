@@ -305,6 +305,29 @@ export const cockpitService = {
     });
   },
 
+  async uploadCampaignVideo(file) {
+    if (!supabase) throw new Error('Supabase não configurado.');
+    const safeName = file.name.toLowerCase().replace(/[^a-z0-9._-]+/g, '-');
+    const path = `prospeccao/${Date.now()}-${safeName}`;
+    const { error } = await supabase.storage
+      .from('campaign-media')
+      .upload(path, file, { contentType: file.type || 'video/mp4', upsert: false });
+    if (error) throw error;
+    const { data } = supabase.storage.from('campaign-media').getPublicUrl(path);
+    return data.publicUrl;
+  },
+
+  sendCampaignMedia({ number, mediaUrl, caption, fileName, contactName }) {
+    return invokeEdgeFunction('admin-billing-notify', {
+      action: 'send_campaign_media',
+      number,
+      media_url: mediaUrl,
+      caption,
+      file_name: fileName,
+      contact_name: contactName,
+    });
+  },
+
   getEvolutionQrCode() {
     return invokeEdgeFunctionStatus('admin-billing-notify', {
       action: 'get_qr_code',

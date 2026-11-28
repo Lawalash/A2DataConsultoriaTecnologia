@@ -271,3 +271,71 @@ export async function getEvolutionQrCode(): Promise<{
     };
   }
 }
+
+export async function sendEvolutionMedia(params: {
+  number: string;
+  mediaUrl: string;
+  caption?: string;
+  fileName?: string;
+}): Promise<EvolutionSendResult> {
+  const cfg = getEvolutionConfig();
+  if (!isEvolutionConfigured(cfg)) {
+    return {
+      ok: false,
+      skipped: true,
+      error: 'Secrets EVOLUTION_API_URL, EVOLUTION_API_KEY ou EVOLUTION_INSTANCE_NAME não configuradas.',
+    };
+  }
+
+  if (!/^https:\/\//i.test(params.mediaUrl)) {
+    return { ok: false, error: 'A URL da mídia deve usar HTTPS.' };
+  }
+
+  let number: string;
+  try {
+    number = normalizeEvolutionDigits(params.number);
+  } catch (err) {
+    return { ok: false, error: err instanceof Error ? err.message : 'Telefone inválido' };
+  }
+
+  try {
+    const response = await fetch(
+      `${cfg.baseUrl}/message/sendMedia/${encodeURIComponent(cfg.instance)}`,
+      {
+        method: 'POST',
+        headers: { apikey: cfg.apiKey, 'content-type': 'application/json' },
+        body: JSON.stringify({
+          number,
+          mediatype: 'video',
+          mimetype: 'video/mp4',
+          caption: params.caption ?? '',
+          media: params.mediaUrl,
+          fileName: params.fileName || 'apresentacao.mp4',
+        }),
+        signal: AbortSignal.timeout(45_000),
+      },
+    );
+
+    const rawText = await response.text();
+    let body: Record<string, unknown> | null = null;
+    try {
+      body = rawText ? (JSON.parse(rawText) as Record<string, unknown>) : null;
+    } catch {
+      body = { raw: rawText.slice(0, 300) };
+    }
+
+    if (!response.ok) {
+      return { ok: false, error: `Evolution HTTP ${response.status}` };
+    }
+
+    const key = body?.key as { id?: string } | undefined;
+    const messageId =
+      key?.id ||
+      (typeof body?.messageId === 'string' ? body.messageId : null) ||
+      (typeof body?.id === 'string' ? body.id : null) ||
+      null;
+    return { ok: true, messageId };
+  } catch (err) {
+    return { ok: false, error: err instanceof Error ? err.message : 'Falha ao enviar mídia' };
+  }
+}

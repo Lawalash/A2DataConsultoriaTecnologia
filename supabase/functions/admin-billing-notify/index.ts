@@ -3,13 +3,19 @@ import { AdminAuthError, requireMasterAdmin } from '../_shared/adminAuth.ts';
 import {
   checkEvolutionInstance,
   getEvolutionQrCode,
+  sendEvolutionMedia,
   sendEvolutionText,
 } from '../_shared/evolution.ts';
 
 type TemplateKey = 'd_minus_3' | 'due_today' | 'block_notice' | 'custom';
 
 interface NotifyPayload {
-  action?: 'send' | 'check_instance' | 'get_qr_code';
+  action?: 'send' | 'check_instance' | 'get_qr_code' | 'send_campaign_media';
+  number?: string;
+  media_url?: string;
+  caption?: string;
+  file_name?: string;
+  contact_name?: string;
   project_id?: string;
   client_id?: string;
   template_key?: TemplateKey;
@@ -70,6 +76,44 @@ Deno.serve(async (req: Request) => {
     if (body?.action === 'check_instance') {
       const status = await checkEvolutionInstance();
       return jsonResponse(status, 200);
+    }
+
+    if (body?.action === 'send_campaign_media') {
+      const number = (body.number ?? '').trim();
+      const mediaUrl = (body.media_url ?? '').trim();
+      const caption = (body.caption ?? '').trim();
+      if (!number || !mediaUrl) {
+        return jsonResponse({ ok: false, error: 'Campos obrigatórios: number e media_url.' }, 400);
+      }
+
+      const res = await sendEvolutionMedia({
+        number,
+        mediaUrl,
+        caption,
+        fileName: body.file_name,
+      });
+
+      await adminClient.from('a2_billing_logs').insert({
+        project_id: null,
+        client_id: null,
+        action_type: 'whatsapp_campaign',
+        channel: 'whatsapp',
+        recipient_whatsapp: number,
+        message_preview: caption.slice(0, 500),
+        status: res.ok ? 'sent' : res.skipped ? 'skipped' : 'failed',
+        external_message_id: res.messageId ?? null,
+        error_detail: res.error ?? null,
+        metadata: { contact_name: body.contact_name ?? null, media_url: mediaUrl },
+        executed_by: user.id,
+      });
+
+      if (!res.ok) {
+        return jsonResponse(
+          { ok: false, error: res.error || 'Falha ao enviar mídia.' },
+          res.skipped ? 422 : 502,
+        );
+      }
+      return jsonResponse({ ok: true, status: 'sent', messageId: res.messageId ?? null });
     }
 
     if (body?.action === 'get_qr_code') {

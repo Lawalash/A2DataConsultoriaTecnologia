@@ -18,6 +18,7 @@ import {
   formatDateTimeBR,
   renderTemplatePreview,
 } from '../../../services/cockpitService';
+import CampaignProspectingPanel from './CampaignProspectingPanel';
 
 const TEMPLATE_VARIABLES = [
   '{{client_name}}',
@@ -257,6 +258,8 @@ const BillingSettingsView = ({ projects, clients, templates, logs, onRefresh, on
           </button>
         </div>
       </div>
+
+      <CampaignProspectingPanel onNotify={onNotify} />
 
       {/* Templates Editor */}
       <section className="cockpit__section">
